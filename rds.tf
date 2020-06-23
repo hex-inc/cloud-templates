@@ -36,9 +36,9 @@ resource "aws_kms_alias" "rds" {
 resource "aws_db_subnet_group" "db" {
   name = "${local.name}-db"
   subnet_ids = [
-    module.public-subnet-us-east-2a.subnet_id,
-    module.public-subnet-us-east-2b.subnet_id,
-    module.public-subnet-us-east-2c.subnet_id
+    module.public-subnet-us-east-1a.subnet_id,
+    module.public-subnet-us-east-1b.subnet_id,
+    module.public-subnet-us-east-1c.subnet_id
   ]
 
   tags = {
