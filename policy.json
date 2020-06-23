@@ -104,7 +104,8 @@
                 "iam:UpdateRole",
                 "iam:GetUser",
                 "iam:GetRolePolicy",
-                "iam:DeletePolicyVersion"
+                "iam:DeletePolicyVersion",
+                "iam:CreateServiceLinkedRole"
             ],
             "Resource": "*",
             "Condition": {
