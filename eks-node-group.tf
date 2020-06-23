@@ -41,9 +41,9 @@ resource "aws_eks_node_group" "hex" {
   disk_size      = 50
 
   subnet_ids = [
-    module.public-subnet-us-east-1a.subnet_id,
-    module.public-subnet-us-east-1b.subnet_id,
-    module.public-subnet-us-east-1c.subnet_id
+    module.public-subnet-us-east-2a.subnet_id,
+    module.public-subnet-us-east-2b.subnet_id,
+    module.public-subnet-us-east-2c.subnet_id
   ]
 
   scaling_config {
