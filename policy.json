@@ -213,7 +213,9 @@
                 "kms:CreateKey",
                 "ec2:CreateSubnet",
                 "eks:CreateCluster",
-                "rds:CreateDBInstance"
+                "rds:CreateDBInstance",
+                "iam:GetOpenIDConnectProvider",
+                "iam:CreateOpenIDConnectProvider"
             ],
             "Resource": "*"
         },

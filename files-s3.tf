@@ -1,5 +1,11 @@
 locals {
-  files-bucket-name = "${local.name}-files"
+  files-bucket-name = "${local.name}-files-${random_string.s3-bucket-id.result}"
+}
+
+resource "random_string" "s3-bucket-id" {
+  length  = 16
+  special = false
+  upper   = false
 }
 
 resource "aws_kms_key" "s3" {

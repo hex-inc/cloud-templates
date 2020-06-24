@@ -13,6 +13,7 @@ resource "aws_subnet" "subnet" {
     Name                                = local.name
     "kubernetes.io/cluster/${var.name}" = "shared"
     "hex-deployment"                    = var.name
+    "kubernetes.io/role/elb"            = "1"
   }
 }
 
