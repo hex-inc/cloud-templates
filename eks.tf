@@ -37,9 +37,9 @@ resource "aws_eks_cluster" "hex" {
 
   vpc_config {
     subnet_ids = [
-      module.public-subnet-us-east-2a.subnet_id,
-      module.public-subnet-us-east-2b.subnet_id,
-      module.public-subnet-us-east-2c.subnet_id
+      module.public-subnet-a.subnet_id,
+      module.public-subnet-b.subnet_id,
+      module.public-subnet-c.subnet_id
     ]
   }
 

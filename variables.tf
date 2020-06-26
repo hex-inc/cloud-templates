@@ -3,7 +3,11 @@ variable "instance" {
   default = "main"
 }
 
-# Provisioning variables
+variable "region" {
+  type    = string
+  default = "us-east-2"
+}
+
 variable "num_nodes" {
   type    = number
   default = 3
