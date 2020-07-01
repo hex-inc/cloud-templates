@@ -40,7 +40,8 @@
         "ec2:AttachNetworkInterface",
         "ec2:DeleteVpc",
         "ec2:DescribeSubnets",
-        "ec2:DescribeVpcClassicLink"
+        "ec2:DescribeVpcClassicLink",
+        "ec2:DescribeVpcClassicLinkDnsSupport"
       ],
       "Resource": "*",
       "Condition": {
@@ -131,7 +132,10 @@
         "kms:DescribeKey",
         "kms:ListResourceTags",
         "kms:DeleteAlias",
-        "kms:CreateGrant"
+        "kms:CreateGrant",
+        "kms:RevokeGrant",
+        "kms:ListAliases",
+        "kms:ListGrants"
       ],
       "Resource": "*",
       "Condition": {
@@ -207,7 +211,6 @@
         "rds:StartDBInstance",
         "ec2:CreateSecurityGroup",
         "ec2:CreateInternetGateway",
-        "kms:ListAliases",
         "kms:CreateKey",
         "ec2:CreateSubnet",
         "eks:CreateCluster",

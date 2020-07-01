@@ -31,3 +31,10 @@ resource "aws_ssm_parameter" "secret-key" {
     "hex-deployment" = local.name
   }
 }
+
+resource "aws_kms_grant" "a" {
+  name              = "${local.name}-s3-kms"
+  key_id            = aws_kms_key.s3.key_id
+  grantee_principal = aws_iam_user.backend.arn
+  operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+}
