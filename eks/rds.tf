@@ -3,22 +3,6 @@ locals {
   dbusername = "hextech"
 }
 
-resource "aws_security_group" "db" {
-  name        = "${local.name}-db"
-  description = "Allow worker nodes to connect to the DB"
-  vpc_id      = aws_vpc.vpc.id
-  ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    "hex-deployment" = local.name
-  }
-}
-
 resource "aws_kms_key" "rds" {
   description         = "Encryption key for RDS"
   enable_key_rotation = true
@@ -33,19 +17,22 @@ resource "aws_kms_alias" "rds" {
   target_key_id = aws_kms_key.rds.key_id
 }
 
-resource "aws_db_subnet_group" "db" {
-  name = "${local.name}-db"
-  subnet_ids = [
-    module.public-subnet-a.subnet_id,
-    module.public-subnet-b.subnet_id,
-    module.public-subnet-c.subnet_id
-  ]
+resource "aws_security_group" "db" {
+  name        = "${local.name}-db"
+  description = "Allow worker nodes to connect to the DB"
+  vpc_id      = module.vpc.vpc_id
+  ingress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [module.eks.worker_security_group_id]
+  }
 
   tags = {
-    Name             = "${local.name}-db"
     "hex-deployment" = local.name
   }
 }
+
 
 resource "aws_db_instance" "default" {
   allocated_storage     = 20
@@ -63,7 +50,7 @@ resource "aws_db_instance" "default" {
   kms_key_id        = aws_kms_alias.rds.target_key_arn
 
   backup_retention_period = 30
-  db_subnet_group_name    = aws_db_subnet_group.db.name
+  db_subnet_group_name    = module.vpc.database_subnet_group
   vpc_security_group_ids  = [aws_security_group.db.id]
 
   final_snapshot_identifier = "final-snapshot-${local.name}"
