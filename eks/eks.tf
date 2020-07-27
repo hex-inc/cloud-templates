@@ -6,12 +6,22 @@ resource "aws_kms_key" "eks" {
   }
 }
 
+resource "aws_kms_alias" "eks" {
+  name          = "alias/${local.name}/eks"
+  target_key_id = aws_kms_key.eks.key_id
+}
+
 resource "aws_kms_key" "workers" {
   description = "EKS Workers EBS Encryption Key"
 
   tags = {
     "hex-deployment" = local.name
   }
+}
+
+resource "aws_kms_alias" "workers" {
+  name          = "alias/${local.name}/workers"
+  target_key_id = aws_kms_key.workers.key_id
 }
 
 module "eks" {
