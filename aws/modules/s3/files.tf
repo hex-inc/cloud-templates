@@ -1,7 +1,8 @@
 locals {
-  files-bucket-name = "${local.name}-files-${random_string.s3-bucket-id.result}"
+  files-bucket-name = "${var.name}-files-${random_string.s3-bucket-id.result}"
 }
 
+# We have to append a random key because bucket ids must be globally unique
 resource "random_string" "s3-bucket-id" {
   length  = 16
   special = false
@@ -13,12 +14,12 @@ resource "aws_kms_key" "s3" {
   enable_key_rotation = true
 
   tags = {
-    "hex-deployment" = local.name
+    "hex-deployment" = var.name
   }
 }
 
 resource "aws_kms_alias" "s3" {
-  name          = "alias/${local.name}/s3"
+  name          = "alias/${var.name}/s3"
   target_key_id = aws_kms_key.s3.key_id
 }
 
@@ -53,7 +54,7 @@ resource "aws_s3_bucket" "files" {
   acl    = "private"
 
   tags = {
-    Name = "Files for ${local.name}"
+    Name = "Files for ${var.name}"
   }
 
   server_side_encryption_configuration {

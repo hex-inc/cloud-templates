@@ -1,11 +1,14 @@
-variable "instance" {
+variable "name" {
   type    = string
-  default = "main"
+  default = "hex-main"
 }
 
-variable "region" {
-  type    = string
-  default = "us-east-2"
+variable "vpc_id" {
+  type = string
+}
+
+variable "subnets" {
+  type = list(string)
 }
 
 variable "num_nodes" {

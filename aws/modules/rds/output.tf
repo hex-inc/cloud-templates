@@ -1,11 +1,3 @@
-output "s3_bucket_name" {
-  value = aws_s3_bucket.files.id
-}
-
-output "s3_bucket_region" {
-  value = aws_s3_bucket.files.region
-}
-
 output "rds_host" {
   value = aws_db_instance.default.address
 }

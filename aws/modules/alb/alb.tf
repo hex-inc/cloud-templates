@@ -6,5 +6,5 @@ module "alb_ingress_controller" {
   k8s_namespace    = "kube-system"
 
   aws_region_name  = var.region
-  k8s_cluster_name = data.aws_eks_cluster.cluster.name
+  k8s_cluster_name = var.cluster
 }
