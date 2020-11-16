@@ -33,4 +33,6 @@ module "alb" {
 
 module "calico" {
   source = "./modules/calico"
+
+  enabled = true
 }
