@@ -26,7 +26,7 @@ resource "aws_kms_alias" "workers" {
 
 module "eks" {
   source       = "terraform-aws-modules/eks/aws"
-  version      = "12.2.0"
+  version      = "13.2.1"
   cluster_name = var.name
   subnets      = var.subnets
 

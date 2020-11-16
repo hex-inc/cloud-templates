@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.44.0"
+  version = "2.64.0"
 
   name             = var.name
   cidr             = "10.0.0.0/16"
@@ -23,12 +23,12 @@ module "vpc" {
 
   public_subnet_tags = {
     "kubernetes.io/cluster/${var.name}" = "shared"
-    "kubernetes.io/role/elb"              = "1"
+    "kubernetes.io/role/elb"            = "1"
   }
 
   private_subnet_tags = {
     "kubernetes.io/cluster/${var.name}" = "shared"
-    "kubernetes.io/role/internal-elb"     = "1"
+    "kubernetes.io/role/internal-elb"   = "1"
   }
 
   tags = {
