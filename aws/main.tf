@@ -26,9 +26,13 @@ module "rds" {
 }
 
 module "alb" {
-  source  = "./modules/alb"
-  region  = var.region
-  cluster = data.aws_eks_cluster.cluster.name
+  source = "./modules/alb"
+
+  k8s_cluster_type = "eks"
+  k8s_namespace    = "kube-system"
+
+  aws_region_name  = var.region
+  k8s_cluster_name = data.aws_eks_cluster.cluster.name
 }
 
 module "calico" {
