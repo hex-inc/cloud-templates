@@ -15,5 +15,5 @@ variable "num_nodes" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.2xlarge"
+  default = "t3.xlarge"
 }
