@@ -1,6 +1,6 @@
 variable "name" {
   type    = string
-  default = "hex-main-modular"
+  default = "hex-main"
 }
 
 variable "region" {
