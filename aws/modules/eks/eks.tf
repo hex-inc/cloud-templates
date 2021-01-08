@@ -35,6 +35,8 @@ module "eks" {
   manage_aws_auth                 = true
   enable_irsa                     = true
 
+  map_users = [ { "groups": [ "system:masters" ], "userarn": "arn:aws-us-gov:iam::035720137635:user/glen-govini", "username": "glen-govini" } ]
+
   tags = {
     Name             = var.name
     "hex-deployment" = var.name
