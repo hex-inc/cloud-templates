@@ -18,7 +18,7 @@ variable "instance_type" {
   default = "t3.xlarge"
 }
 
-variable "create_db_bastion" {
+variable "create_db_tunnel" {
   type    = bool
   default = false
 }

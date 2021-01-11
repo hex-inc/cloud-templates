@@ -30,6 +30,7 @@ module "rds" {
   vpc_id                = module.vpc.vpc_id
   security_groups       = [module.eks.worker_security_group_id]
   database_subnet_group = module.vpc.database_subnet_group
+  db_tunnel_subnet      = var.create_db_tunnel ? module.vpc.public_subnets[0] : null
 }
 
 module "alb" {

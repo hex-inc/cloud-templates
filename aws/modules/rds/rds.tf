@@ -60,6 +60,36 @@ resource "aws_db_instance" "default" {
   }
 }
 
+resource "aws_security_group" "db-tunnel" {
+  count       = var.db_tunnel_subnet != null ? 1 : 0
+  name        = "${var.name}-db-tunnel"
+  description = "SSH tunnel for DB access"
+  vpc_id      = var.vpc_id
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.db.id]
+  }
+}
+
+resource "aws_instance" "db-tunnel" {
+  count                  = var.db_tunnel_subnet != null ? 1 : 0
+  ami                    = "ami-0a0ad6b70e61be944" // Amazon Linux 2 AMI (HVM), SSD Volume Type 
+  instance_type          = "t2.micro"
+  subnet_id              = var.db_tunnel_subnet
+  vpc_security_group_ids = [aws_security_group.db-tunnel.id]
+  tags = {
+    "Name" = "${var.name}-db-tunnel"
+  }
+}
+
 resource "random_password" "postgres-password" {
   length  = 32
   special = false

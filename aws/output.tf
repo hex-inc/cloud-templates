@@ -52,3 +52,13 @@ output "rds_username" {
 output "rds_password_location" {
   value = module.rds.rds_password_location
 }
+
+output "db_tunnel_id" {
+  value = module.rds.db_tunnel_id
+}
+
+# VPC
+
+output "public_ips" {
+  value = module.vpc.public_ips
+}
