@@ -15,19 +15,19 @@ output "files_s3_bucket_secret_key_location" {
   value = module.s3.s3_bucket_secret_key_location
 }
 
-output "cache.cache-s3.bucket_name" {
+output "cache-s3_bucket_name" {
   value = module.cache-s3.s3_bucket_name
 }
 
-output "cache.cache-s3.bucket_region" {
-  value = module.cache-s3.s3_bucket_regionk
+output "cache_s3_bucket_region" {
+  value = module.cache-s3.s3_bucket_region
 }
 
-output "cache.cache-s3.bucket_access_key_location" {
+output "cache_s3_bucket_access_key_location" {
   value = module.cache-s3.s3_bucket_access_key_location
 }
 
-output "cache.cache-s3.bucket_secret_key_location" {
+output "cache_s3_bucket_secret_key_location" {
   value = module.cache-s3.s3_bucket_secret_key_location
 }
 
