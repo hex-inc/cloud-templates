@@ -1,6 +1,7 @@
 locals {
-  dbname     = "hextech"
-  dbusername = "hextech"
+  dbname                     = "hextech"
+  dbusername                 = "hextech"
+  db_ingress_security_groups = var.db_tunnel_subnet != null ? concat(var.security_groups, [var.db_tunnel_subnet]) : var.security_groups
 }
 
 resource "aws_kms_key" "rds" {
@@ -25,7 +26,7 @@ resource "aws_security_group" "db" {
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
-    security_groups = var.security_groups
+    security_groups = local.db_ingress_security_groups
   }
 
   tags = {
