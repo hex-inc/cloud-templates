@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "files-allow-backend" {
       "s3:GetObject",
       "s3:DeleteObject",
     ]
-    resources = ["arn:${aws_arn_identifier}:s3:::${local.bucket-name}/*"]
+    resources = ["arn:${local.aws_arn_identifier}:s3:::${local.bucket-name}/*"]
 
     principals {
       type        = "AWS"
@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "files-allow-backend" {
 
   statement {
     actions   = ["s3:ListBucket"]
-    resources = ["arn:${aws_arn_identifier}:s3:::${local.bucket-name}"]
+    resources = ["arn:${local.aws_arn_identifier}:s3:::${local.bucket-name}"]
 
     principals {
       type        = "AWS"
