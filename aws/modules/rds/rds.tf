@@ -104,7 +104,7 @@ resource "aws_security_group_rule" "db-tunnel-egress" {
 resource "aws_instance" "db-tunnel" {
   count                  = var.db_tunnel_subnet != null ? 1 : 0
   ami                    = data.aws_ami.amazon-linux-2-ami.id
-  instance_type          = "t2.micro"
+  instance_type          = "t3.micro"
   subnet_id              = var.db_tunnel_subnet
   vpc_security_group_ids = [aws_security_group.db-tunnel[0].id]
   tags = {
