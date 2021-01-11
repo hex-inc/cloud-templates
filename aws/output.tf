@@ -4,7 +4,7 @@ output "files_s3_bucket_name" {
 }
 
 output "files_s3_bucket_region" {
-  value = module.s3.s3_bucket_regionk
+  value = module.s3.s3_bucket_region
 }
 
 output "files_s3_bucket_access_key_location" {

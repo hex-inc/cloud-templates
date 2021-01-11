@@ -5,6 +5,8 @@ locals {
   aws_vpc_id                              = data.aws_vpc.selected.id
   aws_region_name                         = data.aws_region.current.name
   aws_iam_path_prefix                     = var.aws_iam_path_prefix == "" ? null : var.aws_iam_path_prefix
+  is_govcloud                             = length(regexall("us-gov", local.aws_region_name)) > 0 ? true : false
+  aws_arn_identifier                      = local.is_govcloud ? "aws-us-gov" : "aws"
 }
 
 data "aws_vpc" "selected" {
