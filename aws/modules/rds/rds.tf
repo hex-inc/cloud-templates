@@ -61,6 +61,25 @@ resource "aws_db_instance" "default" {
   }
 }
 
+data "aws_ami" "amazon-linux-2-ami" {
+  most_recent = true
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+}
+
 resource "aws_security_group" "db-tunnel" {
   count       = var.db_tunnel_subnet != null ? 1 : 0
   name        = "${var.name}-db-tunnel"
@@ -88,7 +107,7 @@ resource "aws_security_group_rule" "db-tunnel-egress" {
 
 resource "aws_instance" "db-tunnel" {
   count                  = var.db_tunnel_subnet != null ? 1 : 0
-  ami                    = "ami-0a0ad6b70e61be944" // Amazon Linux 2 AMI (HVM), SSD Volume Type 
+  ami                    = data.aws_ami.amazon-linux-2-ami.id
   instance_type          = "t2.micro"
   subnet_id              = var.db_tunnel_subnet
   vpc_security_group_ids = [aws_security_group.db-tunnel[0].id]
