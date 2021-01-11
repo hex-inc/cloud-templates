@@ -74,7 +74,7 @@ resource "aws_security_group_rule" "db-tunnel-ingress" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.db-tunnel.id
+  security_group_id = aws_security_group.db-tunnel[0].id
 }
 
 resource "aws_security_group_rule" "db-tunnel-egress" {
@@ -83,7 +83,7 @@ resource "aws_security_group_rule" "db-tunnel-egress" {
   to_port           = 5432
   protocol          = "tcp"
   security_groups   = [aws_security_group.db.id]
-  security_group_id = aws_security_group.db-tunnel.id
+  security_group_id = aws_security_group.db-tunnel[0].id
 }
 
 resource "aws_instance" "db-tunnel" {
