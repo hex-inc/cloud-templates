@@ -17,3 +17,7 @@ output "rds_username" {
 output "rds_password_location" {
   value = aws_ssm_parameter.postgres-password.name
 }
+
+output "db_tunnel_id" {
+  value = aws_instance.db-tunnel.id
+}
