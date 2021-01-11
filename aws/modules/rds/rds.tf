@@ -1,7 +1,7 @@
 locals {
   dbname                     = "hextech"
   dbusername                 = "hextech"
-  db_ingress_security_groups = var.db_tunnel_subnet != null ? concat(var.security_groups, [var.db_tunnel_subnet]) : var.security_groups
+  db_ingress_security_groups = var.db_tunnel_subnet != null ? concat(var.security_groups, [aws_security_group.db-tunnel[0].id]) : var.security_groups
 }
 
 resource "aws_kms_key" "rds" {
@@ -97,7 +97,7 @@ resource "random_password" "postgres-password" {
 }
 
 resource "aws_ssm_parameter" "postgres-password" {
-  name  = "/${var.name}/postgres-password"
+  name  = "/${var.name}/rds/password"
   type  = "SecureString"
   value = random_password.postgres-password.result
 

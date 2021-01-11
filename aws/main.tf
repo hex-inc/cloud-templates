@@ -4,12 +4,13 @@ module "vpc" {
 }
 
 module "eks" {
-  source        = "./modules/eks"
-  name          = var.name
-  vpc_id        = module.vpc.vpc_id
-  subnets       = module.vpc.private_subnets
-  num_nodes     = var.num_nodes
-  instance_type = var.instance_type
+  source               = "./modules/eks"
+  name                 = var.name
+  vpc_id               = module.vpc.vpc_id
+  subnets              = module.vpc.private_subnets
+  num_nodes            = var.num_nodes
+  instance_type        = var.instance_type
+  additional_eks_users = var.additional_eks_users
 }
 
 module "s3" {

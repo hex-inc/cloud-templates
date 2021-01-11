@@ -13,7 +13,7 @@ resource "aws_iam_access_key" "backend" {
 }
 
 resource "aws_ssm_parameter" "access-key" {
-  name  = "/${var.name}/${var.bucket_name}/access-key"
+  name  = "/${var.name}/s3/${var.bucket_name}/access-key"
   type  = "SecureString"
   value = aws_iam_access_key.backend.id
 
@@ -23,7 +23,7 @@ resource "aws_ssm_parameter" "access-key" {
 }
 
 resource "aws_ssm_parameter" "secret-key" {
-  name  = "/${var.name}/${var.bucket_name}/secret-key"
+  name  = "/${var.name}/s3/${var.bucket_name}/secret-key"
   type  = "SecureString"
   value = aws_iam_access_key.backend.secret
 

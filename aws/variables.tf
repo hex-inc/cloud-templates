@@ -22,3 +22,8 @@ variable "create_db_tunnel" {
   type    = bool
   default = false
 }
+
+variable "additional_eks_users" {
+  type    = list(object({ groups = list(string), userarn = string, username = string }))
+  default = []
+}
