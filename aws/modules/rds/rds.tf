@@ -78,12 +78,12 @@ resource "aws_security_group_rule" "db-tunnel-ingress" {
 }
 
 resource "aws_security_group_rule" "db-tunnel-egress" {
-  type              = "egress"
-  from_port         = 5432
-  to_port           = 5432
-  protocol          = "tcp"
-  security_groups   = [aws_security_group.db.id]
-  security_group_id = aws_security_group.db-tunnel[0].id
+  type                     = "egress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.db.id
+  security_group_id        = aws_security_group.db-tunnel[0].id
 }
 
 resource "aws_instance" "db-tunnel" {
