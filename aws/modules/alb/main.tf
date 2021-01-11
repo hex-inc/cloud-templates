@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "eks_oidc_assume_role" {
     }
     principals {
       identifiers = [
-        "arn:aws-us-gov:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.selected[0].identity[0].oidc[0].issuer, "https://", "")}"
+        "arn:${local.aws_arn_identifier}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(data.aws_eks_cluster.selected[0].identity[0].oidc[0].issuer, "https://", "")}"
       ]
       type = "Federated"
     }

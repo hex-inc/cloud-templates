@@ -1,5 +1,7 @@
 locals {
-  files-bucket-name = "${var.name}-files-${random_string.s3-bucket-id.result}"
+  bucket-name        = "${var.name}-${var.bucket_name}-${random_string.s3-bucket-id.result}"
+  is_govcloud        = length(regexall("us-gov", var.region)) > 0 ? true : false
+  aws_arn_identifier = is_govcloud ? "aws-us-gov" : "aws"
 }
 
 # We have to append a random key because bucket ids must be globally unique
@@ -15,11 +17,12 @@ resource "aws_kms_key" "s3" {
 
   tags = {
     "hex-deployment" = var.name
+    "s3-bucket"      = var.bucket_name
   }
 }
 
 resource "aws_kms_alias" "s3" {
-  name          = "alias/${var.name}/s3"
+  name          = "alias/${var.name}/${var.bucket_name}-s3"
   target_key_id = aws_kms_key.s3.key_id
 }
 
@@ -30,7 +33,7 @@ data "aws_iam_policy_document" "files-allow-backend" {
       "s3:GetObject",
       "s3:DeleteObject",
     ]
-    resources = ["arn:aws-us-gov:s3:::${local.files-bucket-name}/*"]
+    resources = ["arn:${aws_arn_identifier}:s3:::${local.bucket-name}/*"]
 
     principals {
       type        = "AWS"
@@ -40,7 +43,7 @@ data "aws_iam_policy_document" "files-allow-backend" {
 
   statement {
     actions   = ["s3:ListBucket"]
-    resources = ["arn:aws-us-gov:s3:::${local.files-bucket-name}"]
+    resources = ["arn:${aws_arn_identifier}:s3:::${local.bucket-name}"]
 
     principals {
       type        = "AWS"
@@ -50,11 +53,11 @@ data "aws_iam_policy_document" "files-allow-backend" {
 }
 
 resource "aws_s3_bucket" "files" {
-  bucket = local.files-bucket-name
+  bucket = local.bucket-name
   acl    = "private"
 
   tags = {
-    Name = "Files for ${var.name}"
+    Name = "Storage for ${var.bucket_name} in ${var.name}"
   }
 
   server_side_encryption_configuration {

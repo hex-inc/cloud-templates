@@ -13,3 +13,7 @@ output "rds_database" {
 output "rds_username" {
   value = local.dbusername
 }
+
+output "rds_password_location" {
+  value = aws_ssm_parameter.postgres-password.name
+}

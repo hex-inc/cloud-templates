@@ -13,8 +13,15 @@ module "eks" {
 }
 
 module "s3" {
-  source = "./modules/s3"
-  name   = var.name
+  source      = "./modules/s3"
+  name        = var.name
+  bucket_name = "files"
+}
+
+module "cache-s3" {
+  source      = "./modules/s3"
+  name        = var.name
+  bucket_name = "cache"
 }
 
 module "rds" {

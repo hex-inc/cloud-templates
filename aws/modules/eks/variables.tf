@@ -20,3 +20,8 @@ variable "instance_type" {
   type    = string
   default = "t3.2xlarge"
 }
+
+variable "additional_eks_users" {
+  type    = list(object({ groups = list(string), userarn = string, username = string }))
+  default = []
+}
