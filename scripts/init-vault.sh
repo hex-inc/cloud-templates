@@ -12,11 +12,6 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    -r|--release)
-    RELEASE="$2"
-    shift # past argument
-    shift # past value
-    ;;
     --help)
     HELP=true
     shift # past argument
@@ -35,18 +30,13 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [[ $HELP ]]; then
   echo "Initializes or unseals vault in a hex deployment"
-  echo "Usage: \`./init-vault.sh -n NAMESPACE -r RELEASE --init\` to initialize vault for the first time"
-  echo "Usage: \`./init-vault.sh -n NAMESPACE -r RELEASE KEY1 KEY2 KEY3\` to unseal vault after it's been initialized"
+  echo "Usage: \`./init-vault.sh -n NAMESPACE --init\` to initialize vault for the first time"
+  echo "Usage: \`./init-vault.sh -n NAMESPACE KEY1 KEY2 KEY3\` to unseal vault after it's been initialized"
   exit 0
 fi
 
 if [[ -z $NAMESPACE ]]; then
   echo "Please specify a namespace with -n or --namespace"
-  exit 1
-fi
-
-if [[ -z $RELEASE ]]; then
-  echo "Please specify a release with -r or --release"
   exit 1
 fi
 
