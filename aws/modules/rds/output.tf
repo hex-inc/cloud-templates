@@ -19,5 +19,5 @@ output "rds_password_location" {
 }
 
 output "db_tunnel_id" {
-  value = aws_instance.db-tunnel.id
+  value = aws_instance.db-tunnel[0].id
 }
