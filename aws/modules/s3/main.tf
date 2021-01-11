@@ -1,7 +1,9 @@
+data "aws_region" "current" {}
+
 locals {
   bucket-name        = "${var.name}-${var.bucket_name}-${random_string.s3-bucket-id.result}"
-  is_govcloud        = length(regexall("us-gov", var.region)) > 0 ? true : false
-  aws_arn_identifier = is_govcloud ? "aws-us-gov" : "aws"
+  is_govcloud        = length(regexall("us-gov", data.aws_region.current.name)) > 0 ? true : false
+  aws_arn_identifier = local.is_govcloud ? "aws-us-gov" : "aws"
 }
 
 # We have to append a random key because bucket ids must be globally unique
