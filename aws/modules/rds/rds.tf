@@ -63,11 +63,7 @@ resource "aws_db_instance" "default" {
 
 data "aws_ami" "amazon-linux-2-ami" {
   most_recent = true
-
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
+  owners      = ["amazon"]
 
   filter {
     name   = "name"
