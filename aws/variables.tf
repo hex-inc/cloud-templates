@@ -17,3 +17,8 @@ variable "instance_type" {
   type    = string
   default = "t3.xlarge"
 }
+
+variable "create_db_bastion" {
+  type    = bool
+  default = false
+}

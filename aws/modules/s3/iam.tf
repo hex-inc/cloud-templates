@@ -9,7 +9,7 @@ resource "aws_iam_user" "backend" {
 }
 
 resource "aws_iam_access_key" "backend" {
-  user = aws_iam_user.backend.name
+  user = aws_iam_user.backend.unique_id
 }
 
 resource "aws_ssm_parameter" "access-key" {
