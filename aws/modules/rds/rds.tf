@@ -85,7 +85,7 @@ resource "aws_instance" "db-tunnel" {
   ami                    = "ami-0a0ad6b70e61be944" // Amazon Linux 2 AMI (HVM), SSD Volume Type 
   instance_type          = "t2.micro"
   subnet_id              = var.db_tunnel_subnet
-  vpc_security_group_ids = [aws_security_group.db-tunnel.id]
+  vpc_security_group_ids = [aws_security_group.db-tunnel[count.index].id]
   tags = {
     "Name" = "${var.name}-db-tunnel"
   }
