@@ -21,4 +21,8 @@ resource "aws_ssm_parameter" "postgres-password" {
   tags = {
     "hex-deployment" = var.name
   }
+
+  providers = {
+    aws = aws.main
+  }
 }
