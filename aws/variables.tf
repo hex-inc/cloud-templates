@@ -40,7 +40,7 @@ variable "alb_hostname" {
 }
 
 # Optional SES (route53 required as well)
-variable "ses_enable" {
+variable "ses_enabled" {
   type    = bool
   default = false
 }
