@@ -66,13 +66,13 @@ output "public_ips" {
 # Route 53
 
 output "name_servers" {
-  value = try(module.route53[0].public_ips, "")
+  value = try(module.route53[0].public_ips, null)
 }
 
 # SES
 
 output "smtp_host" {
-  value = var.ses_enabled ? "email.${var.ses_region}.amazonaws.com" : null
+  value = var.ses_enabled ? "email.${var.region}.amazonaws.com" : null
 }
 
 output "smtp_port" {

@@ -66,9 +66,4 @@ module "ses" {
   name    = var.name
   domain  = var.domain
   zone_id = module.route53[0].zone_id
-
-  providers = {
-    aws.main = aws
-    aws.ses  = aws.ses
-  }
 }

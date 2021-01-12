@@ -44,8 +44,3 @@ variable "ses_enabled" {
   type    = bool
   default = false
 }
-
-variable "ses_region" {
-  type    = string
-  default = null
-}

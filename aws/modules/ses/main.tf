@@ -8,10 +8,6 @@ module "ses" {
   enabled       = true
   verify_dkim   = true
   verify_domain = true
-
-  providers = {
-    aws = aws.ses
-  }
 }
 
 resource "aws_ssm_parameter" "smtp-password" {
@@ -22,6 +18,4 @@ resource "aws_ssm_parameter" "smtp-password" {
   tags = {
     "hex-deployment" = var.name
   }
-
-  provider = aws.main
 }
