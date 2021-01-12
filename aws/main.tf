@@ -68,7 +68,7 @@ module "ses" {
   zone_id = module.route53[0].zone_id
 
   providers = {
-    aws = aws.ses
     aws.main = aws
+    aws.ses  = aws.ses
   }
 }
