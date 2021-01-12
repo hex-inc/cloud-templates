@@ -8,7 +8,7 @@ module "ses" {
   verify_dkim   = true
   verify_domain = true
 
-  providers {
+  providers = {
     aws = aws.ses
   }
 }
