@@ -47,5 +47,5 @@ variable "ses_enable" {
 
 variable "ses_region" {
   type    = string
-  default = var.region
+  default = null
 }
