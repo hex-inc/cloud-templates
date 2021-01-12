@@ -24,7 +24,7 @@ module "hex-site-cloudfront-cert" {
 data "aws_elb_hosted_zone_id" "main" {}
 
 resource "aws_route53_record" "main" {
-  count   = var.alb_hostname ? 1 : 0
+  count   = var.alb_hostname != null ? 1 : 0
   name    = var.domain
   type    = "A"
   zone_id = aws_route53_zone.main.zone_id

@@ -6,7 +6,7 @@ provider "aws" {
 provider "aws" {
   alias   = "ses"
   version = ">= 3.6.0"
-  region  = var.ses_region ? var.ses_region : var.region
+  region  = var.ses_region != null ? var.ses_region : var.region
 }
 
 data "aws_eks_cluster" "cluster" {
