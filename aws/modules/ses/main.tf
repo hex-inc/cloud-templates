@@ -14,7 +14,7 @@ module "ses" {
   }
 }
 
-resource "aws_ssm_parameter" "postgres-password" {
+resource "aws_ssm_parameter" "smtp-password" {
   name  = "/${var.name}/ses/smtp-password"
   type  = "SecureString"
   value = module.ses.secret_access_key

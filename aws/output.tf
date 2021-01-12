@@ -82,3 +82,7 @@ output "smtp_port" {
 output "smtp_username" {
   value = try(module.ses[0].access_key_id, null)
 }
+
+output "smtp_password_location" {
+  value = try(module.ses[0].secret_key_location, null)
+}
