@@ -84,6 +84,7 @@ resource "aws_security_group" "db-tunnel" {
 }
 
 resource "aws_security_group_rule" "db-tunnel-ingress" {
+  count             = var.db_tunnel_subnet != null ? 1 : 0
   type              = "ingress"
   from_port         = 22
   to_port           = 22
@@ -93,6 +94,7 @@ resource "aws_security_group_rule" "db-tunnel-ingress" {
 }
 
 resource "aws_security_group_rule" "db-tunnel-egress" {
+  count                    = var.db_tunnel_subnet != null ? 1 : 0
   type                     = "egress"
   from_port                = 5432
   to_port                  = 5432
