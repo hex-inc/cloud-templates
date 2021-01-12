@@ -62,9 +62,11 @@ resource "aws_s3_bucket" "files" {
     Name = "Storage for ${var.bucket_name} in ${var.name}"
   }
 
-  lifecycle_rule {
+  dynamic "lifecycle_rule" {
+    for_each = var.transition_days > 0 ? [var.transition_days] : []
+
     id      = "transition"
-    enabled = var.transition_days > 0
+    enabled = true
 
     transition {
       days          = var.transition_days
@@ -72,9 +74,11 @@ resource "aws_s3_bucket" "files" {
     }
   }
 
-  lifecycle_rule {
+  dynamic "lifecycle_rule" {
+    for_each = var.expiration_days > 0 ? [var.expiration_days] : []
+
     id      = "expiration"
-    enabled = var.expiration_days > 0
+    enabled = true
 
     expiration {
       days = var.expiration_days
