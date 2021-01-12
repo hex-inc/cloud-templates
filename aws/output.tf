@@ -62,3 +62,23 @@ output "db_tunnel_id" {
 output "public_ips" {
   value = module.vpc.public_ips
 }
+
+# Route 53
+
+output "name_servers" {
+  value = try(module.route53[0].public_ips, "")
+}
+
+# SES
+
+output "smtp_host" {
+  value = var.ses_enabled ? "email.${var.ses_region}.amazonaws.com" : null
+}
+
+output "smtp_port" {
+  value = var.ses_enabled ? 465 : null
+}
+
+output "smtp_username" {
+  value = try(module.ses[0].access_key_id, null)
+}

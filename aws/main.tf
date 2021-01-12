@@ -49,3 +49,21 @@ module "calico" {
 
   enabled = true
 }
+
+module "route53" {
+  count  = var.domain != null ? 1 : 0
+  source = "./modules/route53"
+
+  name         = var.name
+  domain       = var.domain
+  alb_hostname = var.alb_hostname
+}
+
+module "ses" {
+  count  = var.ses_enabled && var.domain != null ? 1 : 0
+  source = "./modules/ses"
+
+  name    = var.name
+  domain  = var.domain
+  zone_id = module.route53[0].zone_id
+}

@@ -3,6 +3,12 @@ provider "aws" {
   region  = var.region
 }
 
+provider "aws" {
+  alias   = "ses"
+  version = ">= 3.6.0"
+  region  = var.ses_region
+}
+
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }
