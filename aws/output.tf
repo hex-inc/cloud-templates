@@ -72,7 +72,7 @@ output "name_servers" {
 # SES
 
 output "smtp_host" {
-  value = var.ses_enabled ? "email.${var.region}.amazonaws.com" : null
+  value = var.ses_enabled ? "email-smtp.${var.region}.amazonaws.com" : null
 }
 
 output "smtp_port" {
