@@ -8,13 +8,12 @@ resource "helm_release" "calico" {
   version    = var.helm_chart_version
 
   values = [
-    "${templatefile("${path.module}/templates/values.yaml.tpl",
+    templatefile("${path.module}/templates/values.yaml.tpl",
       {
         "calico_version"         = var.calico_version,
         "calico_image"           = var.calico_image,
         "typha_image"            = var.typha_image,
         "service_account_create" = var.service_account_create,
-      })
-    }"
+    })
   ]
 }

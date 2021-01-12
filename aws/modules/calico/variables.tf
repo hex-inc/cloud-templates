@@ -36,10 +36,6 @@ variable "helm_release_name" {
   default = "aws-calico"
 }
 
-variable "helm_repo_name" {
-  default = "eks-stable"
-}
-
 variable "helm_repo_url" {
   default = "https://lablabs.github.io/eks-charts/"
 }
