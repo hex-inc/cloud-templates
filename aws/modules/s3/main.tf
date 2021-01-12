@@ -62,6 +62,25 @@ resource "aws_s3_bucket" "files" {
     Name = "Storage for ${var.bucket_name} in ${var.name}"
   }
 
+  lifecycle_rule {
+    id      = "transition"
+    enabled = var.transition_days > 0
+
+    transition {
+      days          = var.transition_days
+      storage_class = "STANDARD_IA"
+    }
+  }
+
+  lifecycle_rule {
+    id      = "expiration"
+    enabled = var.expiration_days > 0
+
+    expiration {
+      days = var.expiration_days
+    }
+  }
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {

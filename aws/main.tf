@@ -23,6 +23,9 @@ module "cache-s3" {
   source      = "./modules/s3"
   name        = var.name
   bucket_name = "cache"
+
+  transition_days = 30
+  expiration_days = 90
 }
 
 module "rds" {
