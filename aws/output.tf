@@ -15,7 +15,7 @@ output "files_s3_bucket_secret_key_location" {
   value = module.s3.s3_bucket_secret_key_location
 }
 
-output "cache-s3_bucket_name" {
+output "cache_s3_bucket_name" {
   value = module.cache-s3.s3_bucket_name
 }
 
