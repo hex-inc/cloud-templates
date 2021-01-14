@@ -20,3 +20,8 @@ variable "security_groups" {
 variable "database_subnet_group" {
   type = string
 }
+
+variable "db_tunnel_subnet" {
+  type    = string
+  default = null
+}

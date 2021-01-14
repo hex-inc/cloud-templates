@@ -25,14 +25,17 @@ resource "aws_kms_alias" "workers" {
 }
 
 module "eks" {
-  source       = "terraform-aws-modules/eks/aws"
-  version      = "12.2.0"
-  cluster_name = var.name
-  subnets      = var.subnets
+  source          = "terraform-aws-modules/eks/aws"
+  version         = "13.2.1"
+  cluster_version = "1.18"
+  cluster_name    = var.name
+  subnets         = var.subnets
 
   cluster_endpoint_private_access = true
   manage_aws_auth                 = true
   enable_irsa                     = true
+
+  map_users = var.additional_eks_users
 
   tags = {
     Name             = var.name

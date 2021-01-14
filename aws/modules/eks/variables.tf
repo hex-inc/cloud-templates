@@ -18,5 +18,10 @@ variable "num_nodes" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.2xlarge"
+  default = "t3.xlarge"
+}
+
+variable "additional_eks_users" {
+  type    = list(object({ groups = list(string), userarn = string, username = string }))
+  default = []
 }

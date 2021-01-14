@@ -1,6 +1,6 @@
 resource "aws_iam_user" "backend" {
   force_destroy = "false"
-  name          = "${var.name}-backend"
+  name          = "${local.safe_name}-backend"
   path          = "/"
 
   tags = {
@@ -13,7 +13,7 @@ resource "aws_iam_access_key" "backend" {
 }
 
 resource "aws_ssm_parameter" "access-key" {
-  name  = "/${var.name}/access-key"
+  name  = "/${var.name}/s3/${var.bucket_name}/access-key"
   type  = "SecureString"
   value = aws_iam_access_key.backend.id
 
@@ -23,7 +23,7 @@ resource "aws_ssm_parameter" "access-key" {
 }
 
 resource "aws_ssm_parameter" "secret-key" {
-  name  = "/${var.name}/secret-key"
+  name  = "/${var.name}/s3/${var.bucket_name}/secret-key"
   type  = "SecureString"
   value = aws_iam_access_key.backend.secret
 
@@ -33,7 +33,7 @@ resource "aws_ssm_parameter" "secret-key" {
 }
 
 resource "aws_kms_grant" "backend" {
-  name              = "${var.name}-s3-kms"
+  name              = "${local.safe_name}-s3-kms"
   key_id            = aws_kms_key.s3.key_id
   grantee_principal = aws_iam_user.backend.arn
   operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
