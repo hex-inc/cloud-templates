@@ -1,5 +1,8 @@
+locals {
+  log_group_name = "eks-${var.name}-log-group"
+}
 resource "aws_cloudwatch_log_group" "default" {
-  name              = var.name
+  name              = local.log_group_name
   retention_in_days = 90
   kms_key_id        = aws_kms_key.cloudwatch.arn
 }
@@ -43,8 +46,8 @@ data "aws_iam_policy_document" "cloudwatch" {
 
     condition {
       test     = "ArnEquals"
-      variable = "kms:EncryptionContext:${local.aws_arn_identifier}:logs:arn"
-      values   = ["arn:${local.aws_arn_identifier}:logs:${var.region}:${data.aws_caller_identity.current.account_id}:log-group:eks-${var.name}-log-group"]
+      variable = "kms:EncryptionContext:aws:logs:arn"
+      values   = ["arn:${local.aws_arn_identifier}:logs:${var.region}:${data.aws_caller_identity.current.account_id}:log-group:${local.log_group_name}"]
     }
 
     principals {
@@ -85,7 +88,7 @@ resource "helm_release" "fluentd-cloudwatch" {
 awsRegion: ${var.region}
 awsAccessKeyId: ${aws_iam_access_key.fluentd.id}
 awsSecretAccessKey: ${aws_iam_access_key.fluentd.secret}
-logGroupName: ${var.name}
+logGroupName: ${local.log_group_name}
 rbac:
   create: true
 EOF
