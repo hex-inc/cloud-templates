@@ -1,3 +1,9 @@
+resource "aws_cloudwatch_log_group" "default" {
+  name              = "${module.label.id}"
+  retention_in_days = 90
+  kms_key_id        = aws_kms_key.cloudwatch.arn
+}
+
 resource "aws_kms_key" "cloudwatch" {
   description         = "Encryption key for Cloudwatch logs"
   enable_key_rotation = true
@@ -53,14 +59,6 @@ resource "aws_kms_alias" "cloudwatch" {
   target_key_id = aws_kms_key.cloudwatch.key_id
 }
 
-module "cloudwatch-logs" {
-  source            = "./modules/cloudwatch-logs"
-  namespace         = "eks"
-  stage             = var.name
-  retention_in_days = 90
-  kms_key_arn       = aws_kms_key.cloudwatch.arn
-}
-
 resource "helm_release" "fluentd-cloudwatch" {
   name    = "fluentd-cloudwatch"
   chart   = "fluentd-cloudwatch"
@@ -71,7 +69,7 @@ resource "helm_release" "fluentd-cloudwatch" {
 awsRegion: ${var.region}
 awsAccessKeyId: ${aws_iam_access_key.fluentd.id}
 awsSecretAccessKey: ${aws_iam_access_key.fluentd.secret}
-logGroupName: ${module.cloudwatch-logs.log_group_name}
+logGroupName: ${var.name}
 rbac:
   create: true
 EOF
