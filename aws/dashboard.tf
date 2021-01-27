@@ -8,4 +8,9 @@ resource "helm_release" "kubernetes-dashboard" {
     name  = "metrics-server.enabled"
     value = "true"
   }
+
+  set {
+    name  = "fullnameOverride"
+    value = "kubernetes-dashboard"
+  }
 }
