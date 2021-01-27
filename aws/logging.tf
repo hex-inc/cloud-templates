@@ -78,6 +78,7 @@ resource "aws_iam_access_key" "fluentd" {
   user = aws_iam_user.fluentd.name
 }
 
+# TODO: migrate to naked fluentd (this is deprecated) + use the -cloudwatch docker image + pass these as fluentd config variables
 resource "helm_release" "fluentd-cloudwatch" {
   name       = "fluentd-cloudwatch"
   chart      = "fluentd-cloudwatch"
