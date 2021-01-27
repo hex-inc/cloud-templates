@@ -59,6 +59,22 @@ resource "aws_kms_alias" "cloudwatch" {
   target_key_id = aws_kms_key.cloudwatch.key_id
 }
 
+# fluentd permissions
+resource "aws_iam_user" "fluentd" {
+  force_destroy = "false"
+  name          = "fluentd-${var.name}"
+  path          = "/"
+}
+
+resource "aws_iam_user_policy_attachment" "fluentd" {
+  policy_arn = "arn:${local.aws_arn_identifier}:iam::aws:policy/CloudWatchAgentServerPolicy"
+  user       = aws_iam_user.fluentd.name
+}
+
+resource "aws_iam_access_key" "fluentd" {
+  user = aws_iam_user.fluentd.name
+}
+
 resource "helm_release" "fluentd-cloudwatch" {
   name    = "fluentd-cloudwatch"
   chart   = "fluentd-cloudwatch"
