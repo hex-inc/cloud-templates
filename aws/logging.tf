@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "cloudwatch" {
 
     condition {
       test     = "ArnEquals"
-      variable = "kms:EncryptionContext:aws:logs:arn"
+      variable = "kms:EncryptionContext:${local.aws_arn_identifier}:logs:arn"
       values   = ["arn:${local.aws_arn_identifier}:logs:${var.region}::log-group:eks-${var.name}-log-group"]
     }
 
