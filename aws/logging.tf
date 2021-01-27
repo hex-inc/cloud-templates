@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "cloudwatch" {
 
     principals {
       type        = "AWS"
-      identifiers = ["arn:${local.aws_arn_identifier}:iam:::root"]
+      identifiers = ["arn:${local.aws_arn_identifier}:iam::${data.aws_caller_identity.current.account_id}:root"]
     }
   }
 
@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "cloudwatch" {
     condition {
       test     = "ArnEquals"
       variable = "kms:EncryptionContext:${local.aws_arn_identifier}:logs:arn"
-      values   = ["arn:${local.aws_arn_identifier}:logs:${var.region}::log-group:eks-${var.name}-log-group"]
+      values   = ["arn:${local.aws_arn_identifier}:logs:${var.region}:${data.aws_caller_identity.current.account_id}:log-group:eks-${var.name}-log-group"]
     }
 
     principals {
