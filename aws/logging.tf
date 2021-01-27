@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "cloudwatch" {
 
     condition {
       test     = "ArnEquals"
-      variable = "kms:EncryptionContext:aws:logs:arn"
+      variable = "kms:EncryptionContext:${local.aws_arn_identifier}:logs:arn"
       values   = ["arn:${local.aws_arn_identifier}:logs:${var.region}:${data.aws_caller_identity.current.account_id}:log-group:${local.log_group_name}"]
     }
 
@@ -84,13 +84,28 @@ resource "helm_release" "fluentd-cloudwatch" {
   repository = "https://charts.helm.sh/incubator"
   version    = "0.13.2"
 
-  values = [<<EOF
-awsRegion: ${var.region}
-awsAccessKeyId: ${aws_iam_access_key.fluentd.id}
-awsSecretAccessKey: ${aws_iam_access_key.fluentd.secret}
-logGroupName: ${local.log_group_name}
-rbac:
-  create: true
-EOF
-  ]
+  set {
+    name  = "awsRegion"
+    value = var.region
+  }
+
+  set_sensitive {
+    name  = "awsAccessKeyId"
+    value = aws_iam_access_key.fluentd.id
+  }
+
+  set_sensitive {
+    name  = "awsSecretAccessKey"
+    value = aws_iam_access_key.fluentd.secret
+  }
+
+  set {
+    name  = "logGroupName"
+    value = local.log_group_name
+  }
+
+  set {
+    name  = "rbac.create"
+    value = "true"
+  }
 }
