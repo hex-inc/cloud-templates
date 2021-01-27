@@ -109,4 +109,9 @@ resource "helm_release" "fluentd-cloudwatch" {
     name  = "rbac.create"
     value = "true"
   }
+
+  set {
+    name  = "image.tag"
+    value = "v1.11.5-debian-cloudwatch-1.0"
+  }
 }
