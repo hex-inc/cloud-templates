@@ -80,10 +80,12 @@ resource "aws_iam_access_key" "fluentd" {
 
 # TODO: migrate to naked fluentd (this is deprecated) + use the -cloudwatch docker image + pass these as fluentd config variables
 resource "helm_release" "fluentd-cloudwatch" {
-  name       = "fluentd-cloudwatch"
-  chart      = "fluentd-cloudwatch"
-  repository = "https://charts.helm.sh/incubator"
-  version    = "0.13.2"
+  name             = "fluentd-cloudwatch"
+  chart            = "fluentd-cloudwatch"
+  repository       = "https://charts.helm.sh/incubator"
+  version          = "0.13.2"
+  namespace        = "fluentd-cloudwatch"
+  create_namespace = true
 
   set {
     name  = "awsRegion"
