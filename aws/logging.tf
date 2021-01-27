@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "default" {
-  name              = "${module.label.id}"
+  name              = var.name
   retention_in_days = 90
   kms_key_id        = aws_kms_key.cloudwatch.arn
 }
@@ -76,10 +76,10 @@ resource "aws_iam_access_key" "fluentd" {
 }
 
 resource "helm_release" "fluentd-cloudwatch" {
-  name    = "fluentd-cloudwatch"
-  chart   = "fluentd-cloudwatch"
-  url     = "https://charts.helm.sh/incubator"
-  version = "0.13.0"
+  name       = "fluentd-cloudwatch"
+  chart      = "fluentd-cloudwatch"
+  repository = "https://charts.helm.sh/incubator"
+  version    = "0.13.2"
 
   values = [<<EOF
 awsRegion: ${var.region}
