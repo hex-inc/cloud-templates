@@ -66,11 +66,11 @@ module "eks" {
 
 // Needed for managing auth
 data "aws_eks_cluster" "hex" {
-  name = module.hex.cluster_id
+  name = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "hex" {
-  name = module.hex.cluster_id
+  name = module.eks.cluster_id
 }
 
 provider "kubernetes" {
