@@ -55,11 +55,6 @@ module "eks" {
       asg_desired_capacity = 3
       root_kms_key_id      = aws_kms_key.workers.arn
       root_encrypted       = true
-      tags = [{
-        key                 = "hex-deployment"
-        propagate_at_launch = true
-        value               = "Hex"
-      }]
     },
   ]
 }

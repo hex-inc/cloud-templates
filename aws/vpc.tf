@@ -30,8 +30,4 @@ module "vpc" {
     "kubernetes.io/cluster/hex"       = "shared"
     "kubernetes.io/role/internal-elb" = "1"
   }
-
-  tags = {
-    "hex-deployment" = "Hex"
-  }
 }
