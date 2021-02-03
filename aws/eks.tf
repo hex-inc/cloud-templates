@@ -46,13 +46,13 @@ module "eks" {
     }
   ]
 
-  vpc_id = var.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   worker_groups = [
     {
       name                 = "worker-group"
-      instance_type        = var.instance_type
-      asg_desired_capacity = var.num_nodes
+      instance_type        = "t3.large"
+      asg_desired_capacity = 3
       root_kms_key_id      = aws_kms_key.workers.arn
       root_encrypted       = true
       tags = [{

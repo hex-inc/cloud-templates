@@ -80,7 +80,7 @@ resource "aws_s3_bucket" "cache" {
     enabled = true
 
     transition {
-      days          = var.transition_days
+      days          = 30
       storage_class = "STANDARD_IA"
     }
   }
@@ -90,7 +90,7 @@ resource "aws_s3_bucket" "cache" {
     enabled = true
 
     expiration {
-      days = var.expiration_days
+      days = 90
     }
   }
 
