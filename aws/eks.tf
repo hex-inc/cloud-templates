@@ -18,7 +18,7 @@ resource "aws_kms_alias" "workers" {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  version         = "13.2.1"
+  version         = "14.0.0"
   cluster_version = "1.18"
   cluster_name    = "hex"
   subnets         = module.vpc.private_subnets
