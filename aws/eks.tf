@@ -1,26 +1,18 @@
 resource "aws_kms_key" "eks" {
-  description = "EKS Secret Encryption Key"
-
-  tags = {
-    "hex-deployment" = var.name
-  }
+  description = "Hex EKS Secret Encryption Key"
 }
 
 resource "aws_kms_alias" "eks" {
-  name          = "alias/${var.name}/eks"
+  name          = "alias/hex/eks"
   target_key_id = aws_kms_key.eks.key_id
 }
 
 resource "aws_kms_key" "workers" {
-  description = "EKS Workers EBS Encryption Key"
-
-  tags = {
-    "hex-deployment" = var.name
-  }
+  description = "Hex EKS Workers EBS Encryption Key"
 }
 
 resource "aws_kms_alias" "workers" {
-  name          = "alias/${var.name}/workers"
+  name          = "alias/hex/workers"
   target_key_id = aws_kms_key.workers.key_id
 }
 
@@ -28,18 +20,23 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "13.2.1"
   cluster_version = "1.18"
-  cluster_name    = var.name
-  subnets         = var.subnets
+  cluster_name    = "hex"
+  subnets         = module.vpc.private_subnets
 
   cluster_endpoint_private_access = true
   manage_aws_auth                 = true
   enable_irsa                     = true
 
-  map_users = var.additional_eks_users
+  map_users = [
+    # {
+    #   "groups"   = ["system:masters"]
+    #   "userarn"  = "YOURARN"
+    #   "username" = "YOURUSER"
+    # }
+  ]
 
   tags = {
-    Name             = var.name
-    "hex-deployment" = var.name
+    Name = "Hex"
   }
 
   cluster_encryption_config = [
@@ -61,7 +58,7 @@ module "eks" {
       tags = [{
         key                 = "hex-deployment"
         propagate_at_launch = true
-        value               = var.name
+        value               = "Hex"
       }]
     },
   ]
