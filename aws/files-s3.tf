@@ -9,14 +9,15 @@ locals {
   files_bucket_name = "hex-files-${random_string.files-s3-bucket-id.result}"
 }
 
-resource "aws_iam_user" "backend-files-s3" {
+resource "aws_iam_user" "eks-user" {
   force_destroy = "false"
-  name          = "hex-backend-files-s3"
+  name          = "hex-eks-user"
   path          = "/"
 }
 
-resource "aws_iam_access_key" "backend-files-s3" {
-  user = aws_iam_user.backend-files-s3.name
+resource "aws_iam_access_key" "eks-user" {
+  user    = aws_iam_user.eks-user.name
+  pgp_key = filebase64("${path.module}/jordan-public.key")
 }
 
 resource "aws_kms_grant" "backend-files-s3" {
