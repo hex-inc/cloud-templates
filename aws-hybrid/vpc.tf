@@ -19,7 +19,7 @@ module "vpc" {
 
 locals {
   vpc_peers = var.hex_vpc_id != null && var.hex_account_id != null ? {
-    "${var.hex_vpc_id}" = var.hex_account_id
+    var.hex_vpc_id = var.hex_account_id
   } : {}
 }
 

@@ -1,3 +1,4 @@
 output "vpc_peering_id" {
-  value = aws_vpc_peering_connection.peer[*].id
+  for_each = aws_vpc_peering_connection.peer
+  value    = each.id
 }
