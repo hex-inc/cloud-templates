@@ -75,6 +75,14 @@ resource "aws_s3_bucket" "cache" {
     Name = "Storage for cache in ${var.name}"
   }
 
+  logging {
+    target_bucket = aws_s3_bucket.log_bucket.id
+    target_prefix = "log/"
+  }
+
+  versioning {
+    enabled = true
+  }
 
   lifecycle_rule {
     id      = "transition"
