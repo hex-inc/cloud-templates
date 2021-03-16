@@ -16,9 +16,19 @@ resource "aws_kms_alias" "workers" {
   target_key_id = aws_kms_key.workers.key_id
 }
 
+resource "aws_iam_user" "eks-user" {
+  force_destroy = "false"
+  name          = "hex-eks-user"
+  path          = "/"
+}
+
+resource "aws_iam_access_key" "eks-user" {
+  user    = aws_iam_user.eks-user.name
+}
+
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  version         = "13.2.1"
+  version         = "~> 13.2"
   cluster_version = "1.18"
   cluster_name    = "hex"
   subnets         = module.vpc.private_subnets

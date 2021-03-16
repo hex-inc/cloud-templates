@@ -9,14 +9,14 @@ locals {
   files_bucket_name = "hex-files-${random_string.files-s3-bucket-id.result}"
 }
 
-resource "aws_iam_user" "eks-user" {
+resource "aws_iam_user" "files-s3" {
   force_destroy = "false"
-  name          = "hex-eks-user"
+  name          = "hex-files-s3"
   path          = "/"
 }
 
-resource "aws_iam_access_key" "eks-user" {
-  user    = aws_iam_user.eks-user.name
+resource "aws_iam_access_key" "files-s3" {
+  user = aws_iam_user.data-cache-s3.name
 }
 
 resource "aws_kms_grant" "files-s3" {
