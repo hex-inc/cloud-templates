@@ -47,7 +47,7 @@ data "aws_vpc_peering_connection" "peer" {
 resource "aws_route" "peer" {
   for_each                  = var.vpc_peering_id != null ? module.vpc.private_route_table_ids : []
   route_table_id            = each.value
-  destination_cidr_block    = data.aws_vpc_peering_connection[var.vpc_peering_id].cidr_block
+  destination_cidr_block    = data.aws_vpc_peering_connection.peer[var.vpc_peering_id].cidr_block
   vpc_peering_connection_id = each.value
 }
 
