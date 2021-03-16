@@ -16,8 +16,8 @@ resource "aws_iam_user" "data-cache-s3" {
 }
 
 resource "aws_iam_access_key" "data-cache-s3" {
-  user = aws_iam_user.data-cache-s3.name
-    pgp_key = var.pgp_key
+  user    = aws_iam_user.data-cache-s3.name
+  pgp_key = var.pgp_key
 }
 
 resource "aws_kms_grant" "data-cache-s3" {

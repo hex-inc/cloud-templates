@@ -9,14 +9,14 @@ locals {
   files_bucket_name = "${var.name}-files-${random_string.files-s3-bucket-id.result}"
 }
 
-resource "aws_iam_user" "eks-user" {
+resource "aws_iam_user" "files-s3" {
   force_destroy = "false"
-  name          = "${var.name}-eks-user"
+  name          = "${var.name}-files-s3"
   path          = "/"
 }
 
-resource "aws_iam_access_key" "eks-user" {
-  user    = aws_iam_user.eks-user.name
+resource "aws_iam_access_key" "files-s3" {
+  user    = aws_iam_user.files-s3.name
   pgp_key = var.pgp_key
 }
 
