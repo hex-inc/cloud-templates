@@ -26,6 +26,35 @@ resource "aws_iam_access_key" "eks-user" {
   user = aws_iam_user.eks-user.name
 }
 
+resource "aws_iam_policy" "eks-user" {
+  description        = "Allow user to use EKS clusters"
+  name = "eks-user"
+  policy      = data.aws_iam_policy_document.eks-user.json
+}
+
+resource "aws_iam_user_policy_attachment" "eks-user" {
+  role       = aws_iam_role.eks-user.name
+  policy_arn = aws_iam_policy.eks-user.arn
+}
+
+data "aws_iam_policy_document" "eks-user" {
+  statement {
+    effect    = "Allow"
+    resources = ["*"]
+
+    actions = [
+      "eks:DescribeNodegroup",
+      "eks:ListNodegroups",
+      "eks:DescribeCluster",
+      "eks:ListClusters",
+      "eks:AccessKubernetesApi",
+      "ssm:GetParameter",
+      "eks:ListUpdates",
+      "eks:ListFargateProfiles",
+    ]
+  }
+}
+
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "~> 13.2"
