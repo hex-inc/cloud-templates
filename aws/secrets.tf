@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "hex-secrets" {
-  name = "hex-secrets"
+  name = "${var.name}-secrets"
 }
 
 resource "aws_secretsmanager_secret_version" "hex-secrets" {

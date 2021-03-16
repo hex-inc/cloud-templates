@@ -1,3 +1,8 @@
+variable "name" {
+  type    = string
+  default = "hex"
+}
+
 variable "region" {
   type    = string
   default = "us-east-2"

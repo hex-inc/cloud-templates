@@ -5,7 +5,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 2.0"
 
-  name             = "Hex"
+  name             = var.name
   cidr             = "10.35.0.0/16"
   azs              = data.aws_availability_zones.available.names
   private_subnets  = ["10.35.10.0/24", "10.35.20.0/24", "10.35.30.0/24"]
@@ -18,8 +18,8 @@ module "vpc" {
 }
 
 locals {
-  vpc_peers = var.peer_vpc_id != null && var.peer_owner_id != null ? {
-    "${var.peer_vpc_id}" = var.peer_owner_id
+  vpc_peers = var.hex_vpc_id != null && var.hex_account_id != null ? {
+    "${var.hex_vpc_id}" = var.hex_account_id
   } : {}
 }
 
@@ -30,6 +30,7 @@ resource "aws_vpc_peering_connection" "peer" {
   peer_owner_id = each.value
 
   tags = {
+    Name = "VPC peering connection from ${var.name} to Hex hosted solution"
     Side = "Requester"
   }
 }

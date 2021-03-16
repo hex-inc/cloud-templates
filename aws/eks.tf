@@ -1,24 +1,24 @@
 resource "aws_kms_key" "eks" {
-  description = "Hex EKS Secret Encryption Key"
+  description = "${var.name} EKS Secret Encryption Key"
 }
 
 resource "aws_kms_alias" "eks" {
-  name          = "alias/hex/eks"
+  name          = "alias/${var.name}/eks"
   target_key_id = aws_kms_key.eks.key_id
 }
 
 resource "aws_kms_key" "workers" {
-  description = "Hex EKS Workers EBS Encryption Key"
+  description = "${var.name} EKS Workers EBS Encryption Key"
 }
 
 resource "aws_kms_alias" "workers" {
-  name          = "alias/hex/workers"
+  name          = "alias/${var.name}/workers"
   target_key_id = aws_kms_key.workers.key_id
 }
 
 resource "aws_iam_user" "eks-user" {
   force_destroy = "false"
-  name          = "hex-eks-user"
+  name          = "${var.name}-eks-user"
   path          = "/"
 }
 
@@ -30,7 +30,7 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "~> 13.2"
   cluster_version = "1.18"
-  cluster_name    = "hex"
+  cluster_name    = "${var.name}"
   subnets         = module.vpc.private_subnets
 
   cluster_endpoint_private_access = true
@@ -41,12 +41,12 @@ module "eks" {
     {
       "groups"   = ["system:masters"]
       "userarn"  = aws_iam_user.eks-user.arn
-      "username" = "hex-eks-user"
+      "username" = "${var.name}-eks-user"
     }
   ]
 
   tags = {
-    Name = "Hex"
+    Name = "${var.name}"
   }
 
   cluster_encryption_config = [
