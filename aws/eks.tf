@@ -23,7 +23,7 @@ resource "aws_iam_user" "eks-user" {
 }
 
 resource "aws_iam_access_key" "eks-user" {
-  user    = aws_iam_user.eks-user.name
+  user = aws_iam_user.eks-user.name
 }
 
 module "eks" {
@@ -61,7 +61,7 @@ module "eks" {
   worker_groups = [
     {
       name                 = "worker-group"
-      instance_type        = "t3.large"
+      instance_type        = "t3.2xlarge"
       asg_desired_capacity = 3
       root_kms_key_id      = aws_kms_key.workers.arn
       root_encrypted       = true
