@@ -61,8 +61,8 @@ module "eks" {
   worker_groups = [
     {
       name                 = "worker-group"
-      instance_type        = "t3.2xlarge"
-      asg_desired_capacity = 3
+      instance_type        = var.instance_type
+      asg_desired_capacity = var.num_nodes
       root_kms_key_id      = aws_kms_key.workers.arn
       root_encrypted       = true
     },
