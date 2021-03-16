@@ -76,7 +76,7 @@ resource "aws_s3_bucket" "cache" {
   }
 
   logging {
-    target_bucket = aws_s3_bucket.log_bucket.id
+    target_bucket = aws_s3_bucket.logging.id
     target_prefix = "log/"
   }
 
