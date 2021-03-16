@@ -18,9 +18,6 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  create_database_subnet_group       = true
-  create_database_subnet_route_table = true
-
   public_subnet_tags = {
     "kubernetes.io/cluster/hex" = "shared"
     "kubernetes.io/role/elb"    = "1"
