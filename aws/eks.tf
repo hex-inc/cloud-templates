@@ -30,7 +30,7 @@ module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "~> 13.2"
   cluster_version = "1.18"
-  cluster_name    = "${var.name}"
+  cluster_name    = var.name
   subnets         = module.vpc.private_subnets
 
   cluster_endpoint_private_access = true
@@ -46,7 +46,7 @@ module "eks" {
   ]
 
   tags = {
-    Name = "${var.name}"
+    Name = var.name
   }
 
   cluster_encryption_config = [
