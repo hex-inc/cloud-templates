@@ -12,3 +12,8 @@ variable "num_nodes" {
   type    = number
   default = "3"
 }
+
+variable "vpc_peering_id" {
+  type    = string
+  default = null
+}

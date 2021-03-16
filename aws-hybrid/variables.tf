@@ -14,3 +14,13 @@ variable "pgp_key" {
 variable "hex_account_id" {
   type = string
 }
+
+variable "peer_vpc_id" {
+  type    = string
+  default = null
+}
+
+variable "peer_owner_id" {
+  type    = number
+  default = null
+}

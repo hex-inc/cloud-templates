@@ -28,3 +28,13 @@ module "vpc" {
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
+
+
+resource "aws_vpc_peering_connection_accepter" "peer" {
+  for_each                  = var.vpc_peering_id ? toset([var.vpc_peering_id]) : []
+  vpc_peering_connection_id = each.value
+
+  tags = {
+    Side = "Accepter"
+  }
+}

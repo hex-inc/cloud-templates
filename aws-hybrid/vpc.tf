@@ -17,28 +17,19 @@ module "vpc" {
   enable_ipv6                        = true
 }
 
-module "tgw" {
-  source  = "terraform-aws-modules/transit-gateway/aws"
-  version = "~> 1.0"
+locals {
+  vpc_peers = var.peer_vpc_id != null && var.peer_owner_id != null ? {
+    "${var.peer_vpc_id}" = var.peer_owner_id
+  } : {}
+}
 
-  name        = "hex-tgw"
-  description = "Hex Transit Gateway"
+resource "aws_vpc_peering_connection" "peer" {
+  for_each      = local.vpc_peers
+  vpc_id        = module.vpc.vpc_id
+  peer_vpc_id   = each.key
+  peer_owner_id = each.value
 
-  vpc_attachments = {
-    # vpc = {
-    #   vpc_id       = module.vpc.vpc_id
-    #   subnet_ids   = module.vpc.database_subnets
-    #   dns_support  = true
-    #   ipv6_support = true
-
-    #   tgw_routes = [
-    #     {
-    #       destination_cidr_block = "30.0.0.0/16"
-    #     }
-    #   ]
-    # }
+  tags = {
+    Side = "Requester"
   }
-
-  ram_allow_external_principals = true
-  ram_principals                = [var.hex_account_id]
 }
