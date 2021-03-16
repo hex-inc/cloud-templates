@@ -31,7 +31,7 @@ module "vpc" {
 
 
 resource "aws_vpc_peering_connection_accepter" "peer" {
-  for_each                  = var.vpc_peering_id ? toset([var.vpc_peering_id]) : []
+  for_each                  = var.vpc_peering_id != null ? toset([var.vpc_peering_id]) : []
   vpc_peering_connection_id = each.value
 
   tags = {
