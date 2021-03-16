@@ -6,29 +6,29 @@ resource "random_string" "files-s3-bucket-id" {
 }
 
 locals {
-  files_bucket_name = "hex-files-${random_string.files-s3-bucket-id.result}"
+  files_bucket_name = "${var.name}-files-${random_string.files-s3-bucket-id.result}"
 }
 
 resource "aws_iam_user" "eks-user" {
   force_destroy = "false"
-  name          = "hex-eks-user"
+  name          = "${var.name}-eks-user"
   path          = "/"
 }
 
 resource "aws_iam_access_key" "eks-user" {
   user    = aws_iam_user.eks-user.name
-  pgp_key = filebase64("${path.module}/jordan-public.key")
+  pgp_key = var.pgp_key
 }
 
-resource "aws_kms_grant" "backend-files-s3" {
-  name              = "hex-files-s3-kms"
+resource "aws_kms_grant" "files-s3" {
+  name              = "${var.name}-files-s3-kms"
   key_id            = aws_kms_key.files-s3.key_id
-  grantee_principal = aws_iam_user.backend-files-s3.arn
+  grantee_principal = aws_iam_user.files-s3.arn
   operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
 }
 
 resource "aws_kms_key" "files-s3" {
-  description         = "Hex Encryption key for files S3"
+  description         = "${var.name} Encryption key for files S3"
   enable_key_rotation = true
 
   tags = {
@@ -37,11 +37,11 @@ resource "aws_kms_key" "files-s3" {
 }
 
 resource "aws_kms_alias" "files-s3" {
-  name          = "alias/hex/files-s3"
+  name          = "alias/${var.name}/files-s3"
   target_key_id = aws_kms_key.files-s3.key_id
 }
 
-data "aws_iam_policy_document" "allow-backend-files-s3" {
+data "aws_iam_policy_document" "allow-files-s3" {
   statement {
     actions = [
       "s3:PutObject",
@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "allow-backend-files-s3" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_user.backend-files-s3.arn]
+      identifiers = [aws_iam_user.files-s3.arn]
     }
   }
 
@@ -62,7 +62,7 @@ data "aws_iam_policy_document" "allow-backend-files-s3" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_user.backend-files-s3.arn]
+      identifiers = [aws_iam_user.files-s3.arn]
     }
   }
 }
@@ -84,5 +84,5 @@ resource "aws_s3_bucket" "files" {
     }
   }
 
-  policy = data.aws_iam_policy_document.allow-backend-files-s3.json
+  policy = data.aws_iam_policy_document.allow-files-s3.json
 }

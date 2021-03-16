@@ -6,8 +6,8 @@ resource "aws_secretsmanager_secret_version" "hex-secrets" {
   secret_id = aws_secretsmanager_secret.hex-secrets.id
   secret_string = jsonencode({
     backend = {
-      "AWS_SECRET_ACCESS_KEY" = aws_iam_access_key.backend-files-s3.secret
-      "AWS_ACCESS_KEY_ID"     = aws_iam_access_key.backend-files-s3.id
+      "AWS_SECRET_ACCESS_KEY" = aws_iam_access_key.files-s3.secret
+      "AWS_ACCESS_KEY_ID"     = aws_iam_access_key.files-s3.id
       bucket                  = local.files_bucket_name
     }
     cache = {

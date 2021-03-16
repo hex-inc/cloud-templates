@@ -19,10 +19,10 @@ resource "aws_iam_access_key" "eks-user" {
   user    = aws_iam_user.eks-user.name
 }
 
-resource "aws_kms_grant" "backend-files-s3" {
+resource "aws_kms_grant" "files-s3" {
   name              = "hex-files-s3-kms"
   key_id            = aws_kms_key.files-s3.key_id
-  grantee_principal = aws_iam_user.backend-files-s3.arn
+  grantee_principal = aws_iam_user.files-s3.arn
   operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
 }
 
@@ -40,7 +40,7 @@ resource "aws_kms_alias" "files-s3" {
   target_key_id = aws_kms_key.files-s3.key_id
 }
 
-data "aws_iam_policy_document" "allow-backend-files-s3" {
+data "aws_iam_policy_document" "allow-files-s3" {
   statement {
     actions = [
       "s3:PutObject",
@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "allow-backend-files-s3" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_user.backend-files-s3.arn]
+      identifiers = [aws_iam_user.files-s3.arn]
     }
   }
 
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "allow-backend-files-s3" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_user.backend-files-s3.arn]
+      identifiers = [aws_iam_user.files-s3.arn]
     }
   }
 }
@@ -83,5 +83,5 @@ resource "aws_s3_bucket" "files" {
     }
   }
 
-  policy = data.aws_iam_policy_document.allow-backend-files-s3.json
+  policy = data.aws_iam_policy_document.allow-files-s3.json
 }

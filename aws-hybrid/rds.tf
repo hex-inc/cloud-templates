@@ -9,20 +9,20 @@ resource "aws_kms_key" "rds" {
 }
 
 resource "aws_kms_alias" "rds" {
-  name          = "alias/hex/rds"
+  name          = "alias/${var.name}/rds"
   target_key_id = aws_kms_key.rds.key_id
 }
 
 resource "aws_security_group" "db" {
-  name        = "hex-db"
+  name        = "${var.name}-db"
   description = "Allow worker nodes to connect to the DB"
   vpc_id      = module.vpc.vpc_id
-  ingress {
-    from_port       = 5432
-    to_port         = 5432
-    protocol        = "tcp"
-    security_groups = [module.eks.worker_security_group_id]
-  }
+  # ingress {
+  #   from_port       = 5432
+  #   to_port         = 5432
+  #   protocol        = "tcp"
+  #   security_groups = []
+  # }
 }
 
 resource "aws_db_instance" "hex" {
@@ -34,8 +34,8 @@ resource "aws_db_instance" "hex" {
   instance_class        = "db.m5.large"
 
   # hex is a reserved named, so we use hextech
-  name     = "hextech"
-  username = "hextech"
+  name     = local.dbname
+  username = local.dbusername
   password = random_password.postgres-password.result
 
   storage_encrypted = true
@@ -45,8 +45,8 @@ resource "aws_db_instance" "hex" {
   db_subnet_group_name    = module.vpc.database_subnet_group
   vpc_security_group_ids  = [aws_security_group.db.id]
 
-  final_snapshot_identifier = "final-snapshot-hex"
-  identifier                = "hex"
+  final_snapshot_identifier = "final-snapshot-${var.name}"
+  identifier                = "${var.name}"
 }
 
 resource "random_password" "postgres-password" {
