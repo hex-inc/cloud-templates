@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_kms_key" "rds" {
-  description         = "Hex Encryption key for RDS"
+  description         = "${var.name} Encryption key for RDS"
   enable_key_rotation = true
 }
 
@@ -15,14 +15,14 @@ resource "aws_kms_alias" "rds" {
 
 resource "aws_security_group" "db" {
   name        = "${var.name}-db"
-  description = "Allow worker nodes to connect to the DB"
+  description = "Allow Hex VPC to connect to the DB"
   vpc_id      = module.vpc.vpc_id
-  # ingress {
-  #   from_port       = 5432
-  #   to_port         = 5432
-  #   protocol        = "tcp"
-  #   security_groups = []
-  # }
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
 }
 
 resource "aws_db_instance" "hex" {

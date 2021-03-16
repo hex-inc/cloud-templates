@@ -72,7 +72,7 @@ resource "aws_s3_bucket" "files" {
   acl    = "private"
 
   tags = {
-    Name = "Storage for files in Hex"
+    Name = "Storage for files in ${var.name}"
   }
 
   logging {

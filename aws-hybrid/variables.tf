@@ -12,7 +12,7 @@ variable "pgp_key" {
 }
 
 variable "hex_account_id" {
-  type = string
+  type    = string
   default = null
 }
 

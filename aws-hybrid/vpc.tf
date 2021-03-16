@@ -8,13 +8,9 @@ module "vpc" {
   name             = var.name
   cidr             = "10.35.0.0/16"
   azs              = data.aws_availability_zones.available.names
-  private_subnets  = ["10.35.10.0/24", "10.35.20.0/24", "10.35.30.0/24"]
-  public_subnets   = ["10.35.110.0/24", "10.35.120.0/24", "10.35.130.0/24"]
   database_subnets = ["10.35.201.0/24", "10.35.202.0/24", "10.35.203.0/24"]
 
-  create_database_subnet_group       = true
-  create_database_subnet_route_table = true
-  enable_ipv6                        = true
+  create_database_subnet_group = true
 }
 
 locals {
@@ -30,7 +26,7 @@ resource "aws_vpc_peering_connection" "peer" {
   peer_owner_id = each.value
 
   tags = {
-    Name = "VPC peering connection from ${var.name} to Hex hosted solution"
+    Name = "VPC peering connection to Hex from ${var.name} hosted solution"
     Side = "Requester"
   }
 }
