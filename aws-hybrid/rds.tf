@@ -46,7 +46,7 @@ resource "aws_db_instance" "hex" {
   vpc_security_group_ids  = [aws_security_group.db.id]
 
   final_snapshot_identifier = "final-snapshot-${var.name}"
-  identifier                = "${var.name}"
+  identifier                = var.name
 }
 
 resource "random_password" "postgres-password" {
