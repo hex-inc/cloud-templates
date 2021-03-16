@@ -13,20 +13,24 @@ module "vpc" {
   create_database_subnet_group = true
 }
 
-locals {
-  vpc_peers = var.hex_vpc_id != null && var.hex_account_id != null ? {
-    (var.hex_vpc_id) = var.hex_account_id
-  } : {}
-}
-
 resource "aws_vpc_peering_connection" "peer" {
-  for_each      = local.vpc_peers
   vpc_id        = module.vpc.vpc_id
-  peer_vpc_id   = each.key
-  peer_owner_id = each.value
+  peer_vpc_id   = var.hex_vpc_id
+  peer_owner_id = var.hex_account_id
 
   tags = {
     Name = "VPC peering connection to Hex from ${var.name} hosted solution"
     Side = "Requester"
   }
+}
+
+data "aws_vpc_peering_connection" "peer" {
+  id = aws_vpc_peering_connection.peer.id
+}
+
+resource "aws_route" "peer" {
+  for_each                  = toset(module.vpc.private_route_table_ids)
+  route_table_id            = each.value
+  destination_cidr_block    = data.aws_vpc_peering_connection.peer.peer_cidr_block
+  vpc_peering_connection_id = data.aws_vpc_peering_connection.peer.id
 }

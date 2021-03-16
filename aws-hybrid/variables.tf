@@ -12,11 +12,9 @@ variable "pgp_key" {
 }
 
 variable "hex_account_id" {
-  type    = string
-  default = null
+  type = string
 }
 
 variable "hex_vpc_id" {
-  type    = string
-  default = null
+  type = string
 }
