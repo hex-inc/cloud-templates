@@ -15,11 +15,6 @@ resource "aws_secretsmanager_secret_version" "hex-secrets" {
       "AWS_ACCESS_KEY_ID"     = aws_iam_access_key.data-cache-s3.id
       bucket                  = local.cache_bucket_name
     }
-    eks = {
-      "AWS_SECRET_ACCESS_KEY" = aws_iam_access_key.eks-user.secret
-      "AWS_ACCESS_KEY_ID"     = aws_iam_access_key.eks-user.id
-      cluster                 = module.eks.cluster_id
-    }
     rds = {
       host     = aws_db_instance.hex.address
       port     = aws_db_instance.hex.port

@@ -28,11 +28,11 @@ module "eks" {
   enable_irsa                     = true
 
   map_users = [
-    # {
-    #   "groups"   = ["system:masters"]
-    #   "userarn"  = "YOURARN"
-    #   "username" = "YOURUSER"
-    # }
+    {
+      "groups"   = ["system:masters"]
+      "userarn"  = aws_iam_user.eks-user.arn
+      "username" = "hex-eks-user"
+    }
   ]
 
   tags = {

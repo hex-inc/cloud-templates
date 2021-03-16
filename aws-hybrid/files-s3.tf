@@ -17,6 +17,7 @@ resource "aws_iam_user" "eks-user" {
 
 resource "aws_iam_access_key" "eks-user" {
   user    = aws_iam_user.eks-user.name
+  pgp_key = filebase64("${path.module}/jordan-public.key")
 }
 
 resource "aws_kms_grant" "backend-files-s3" {
