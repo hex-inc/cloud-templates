@@ -33,7 +33,7 @@ resource "aws_iam_policy" "eks-user" {
 }
 
 resource "aws_iam_user_policy_attachment" "eks-user" {
-  user       = aws_iam_role.eks-user.name
+  user       = aws_iam_user.eks-user.name
   policy_arn = aws_iam_policy.eks-user.arn
 }
 
