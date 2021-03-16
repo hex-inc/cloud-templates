@@ -11,6 +11,6 @@ variable "pgp_key" {
   type = string
 }
 
-variable "tgw" {
-  type = string
-}
+# variable "tgw" {
+#   type = string
+# }
