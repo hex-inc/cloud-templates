@@ -1,9 +1,13 @@
+data "aws_availability_zones" "available" {
+}
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 2.70"
 
   name            = var.name
   cidr            = "10.0.0.0/16"
+  azs             = data.aws_availability_zones.available.names
   private_subnets = ["10.0.10.0/24", "10.0.20.0/24", "10.0.30.0/24"]
   public_subnets  = ["10.0.110.0/24", "10.0.120.0/24", "10.0.130.0/24"]
 
@@ -41,7 +45,7 @@ data "aws_vpc_peering_connection" "peer" {
 }
 
 resource "aws_route" "peer" {
-  for_each                  = var.vpc_peering_id != null ? module.vpc.private_route_table_ids : []
+  for_each                  = var.vpc_peering_id != null ? toset(module.vpc.private_route_table_ids) : []
   route_table_id            = each.value
   destination_cidr_block    = data.aws_vpc_peering_connection.peer[var.vpc_peering_id].cidr_block
   vpc_peering_connection_id = each.value
