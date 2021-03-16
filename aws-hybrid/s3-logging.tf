@@ -23,7 +23,7 @@ resource "aws_kms_alias" "logging-s3" {
   target_key_id = aws_kms_key.logging-s3.key_id
 }
 
-resource "aws_s3_bucket" "log_bucket" {
+resource "aws_s3_bucket" "logging" {
   bucket = local.logging_bucket_name
   acl    = "log-delivery-write"
 
@@ -43,4 +43,12 @@ resource "aws_s3_bucket" "log_bucket" {
       }
     }
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "logging" {
+  bucket                  = aws_s3_bucket.logging.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
