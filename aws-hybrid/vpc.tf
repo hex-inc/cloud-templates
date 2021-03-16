@@ -25,22 +25,18 @@ module "tgw" {
   description = "Hex Transit Gateway"
 
   vpc_attachments = {
-    vpc = {
-      vpc_id       = module.vpc.vpc_id
-      subnet_ids   = module.vpc.private_subnets
-      dns_support  = true
-      ipv6_support = true
+    # vpc = {
+    #   vpc_id       = module.vpc.vpc_id
+    #   subnet_ids   = module.vpc.database_subnets
+    #   dns_support  = true
+    #   ipv6_support = true
 
-      tgw_routes = [
-        {
-          destination_cidr_block = "30.0.0.0/16"
-        },
-        {
-          blackhole              = true
-          destination_cidr_block = "40.0.0.0/20"
-        }
-      ]
-    }
+    #   tgw_routes = [
+    #     {
+    #       destination_cidr_block = "30.0.0.0/16"
+    #     }
+    #   ]
+    # }
   }
 
   ram_allow_external_principals = true
