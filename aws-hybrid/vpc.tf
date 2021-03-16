@@ -24,13 +24,9 @@ resource "aws_vpc_peering_connection" "peer" {
   }
 }
 
-data "aws_vpc_peering_connection" "peer" {
-  id = aws_vpc_peering_connection.peer.id
-}
-
 resource "aws_route" "peer" {
   for_each                  = toset(module.vpc.private_route_table_ids)
   route_table_id            = each.value
-  destination_cidr_block    = data.aws_vpc_peering_connection.peer.peer_cidr_block
-  vpc_peering_connection_id = data.aws_vpc_peering_connection.peer.id
+  destination_cidr_block    = "10.0.0.0/16"
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
