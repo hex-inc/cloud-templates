@@ -6,4 +6,6 @@ module "ses" {
   zone_id       = aws_route53_zone.hex.zone_id
   verify_dkim   = true
   verify_domain = true
+
+  name = var.name
 }
