@@ -33,7 +33,7 @@ data "aws_route_tables" "peer" {
   vpc_id = module.vpc.vpc_id
 
   filter {
-    name   = "hex/cluster"
+    name   = "tag:hex/cluster"
     values = [var.name]
   }
 
