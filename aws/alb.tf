@@ -33,8 +33,8 @@ module "alb_controller" {
   source = "github.com/GSA/terraform-kubernetes-aws-load-balancer-controller"
 
   providers = {
-    kubernetes = "kubernetes.eks",
-    helm       = "helm.eks"
+    kubernetes = kubernetes.eks,
+    helm       = helm.eks
   }
 
   k8s_cluster_type = "eks"

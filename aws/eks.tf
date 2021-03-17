@@ -112,5 +112,4 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.hex.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.hex.token
   load_config_file       = false
-  version                = "~> 1.9"
 }
