@@ -1,5 +1,5 @@
 locals {
-  "k8s_cluster_name" = module.eks.cluster_name
+  k8s_cluster_name = module.eks.cluster_name
 }
 
 data "aws_region" "current" {}
