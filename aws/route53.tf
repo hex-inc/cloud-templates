@@ -16,3 +16,19 @@ resource "aws_route53_record" "hex" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "hex-mx" {
+  name    = "${var.domain_name}."
+  type    = "MX"
+  zone_id = aws_route53_zone.hex.zone_id
+  records = ["10 feedback-smtp.${var.region}.amazonses.com"]
+  ttl     = 600
+}
+
+resource "aws_route53_record" "hex-spf" {
+  name    = "${var.domain_name}."
+  type    = "TXT"
+  zone_id = aws_route53_zone.hex.zone_id
+  records = ["v=spf1 include:amazonses.com ~all"]
+  ttl     = 600
+}
