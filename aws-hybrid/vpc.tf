@@ -11,10 +11,6 @@ module "vpc" {
   database_subnets = ["10.35.201.0/24", "10.35.202.0/24", "10.35.203.0/24"]
 
   create_database_subnet_group = true
-
-  database_route_table_tags = {
-    "hex/cluster" = var.name
-  }
 }
 
 resource "aws_vpc_peering_connection" "peer" {
@@ -28,21 +24,10 @@ resource "aws_vpc_peering_connection" "peer" {
   }
 }
 
-
-data "aws_route_tables" "peer" {
-  vpc_id = module.vpc.vpc_id
-
-  filter {
-    name   = "tag:hex/cluster"
-    values = [var.name]
-  }
-
-  depends_on = [module.vpc]
-}
-
 resource "aws_route" "peer" {
-  for_each                  = data.aws_route_tables.peer.ids
-  route_table_id            = each.value
+  count                     = length(data.aws_availability_zones.available.names)
+  depends_on                = [module.vpc]
+  route_table_id            = element(module.vpc.private_route_table_ids, count.index)
   destination_cidr_block    = "10.0.0.0/16"
   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
