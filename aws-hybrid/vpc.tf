@@ -42,7 +42,7 @@ data "aws_route_tables" "peer" {
 
 resource "aws_route" "peer" {
   for_each                  = data.aws_route_tables.peer
-  route_table_id            = each.id
+  route_table_id            = each.value.id
   destination_cidr_block    = "10.0.0.0/16"
   vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
