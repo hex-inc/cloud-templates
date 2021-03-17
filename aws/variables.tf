@@ -26,3 +26,8 @@ variable "vpc_peering_id" {
 variable "domain_name" {
   type = string
 }
+
+variable "alb_url" {
+  type = string
+  default = null
+}

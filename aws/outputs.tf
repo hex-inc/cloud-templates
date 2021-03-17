@@ -1,3 +1,3 @@
-output "cert_verification" {
-  value = aws_acm_certificate.cert.domain_validation_options
+output "nameservers" {
+  value = aws_route53_zone.hex.name_servers
 }
