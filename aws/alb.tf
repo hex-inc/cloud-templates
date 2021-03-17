@@ -13,7 +13,7 @@ data "aws_eks_cluster_auth" "aws_iam_authenticator" {
 }
 
 provider "kubernetes" {
-  alias = "eks"
+  alias                  = "eks"
   host                   = data.aws_eks_cluster.target.endpoint
   token                  = data.aws_eks_cluster_auth.aws_iam_authenticator.token
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.target.certificate_authority[0].data)
@@ -30,7 +30,7 @@ provider "helm" {
 }
 
 module "alb_controller" {
-  source  = "github.com/GSA/terraform-kubernetes-aws-load-balancer-controller"
+  source = "github.com/GSA/terraform-kubernetes-aws-load-balancer-controller"
 
   providers = {
     kubernetes = "kubernetes.eks",
@@ -40,6 +40,7 @@ module "alb_controller" {
   k8s_cluster_type = "eks"
   k8s_namespace    = "kube-system"
 
-  aws_region_name  = data.aws_region.current.name
-  k8s_cluster_name = data.aws_eks_cluster.target.name
+  aws_region_name           = data.aws_region.current.name
+  k8s_cluster_name          = data.aws_eks_cluster.target.name
+  alb_controller_depends_on = [module.eks]
 }

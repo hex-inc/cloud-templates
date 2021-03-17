@@ -27,8 +27,8 @@ resource "aws_iam_access_key" "eks-user" {
 }
 
 resource "aws_iam_policy" "eks-user" {
-  description        = "Allow user to use EKS clusters"
-  name = "eks-user"
+  description = "Allow user to use EKS clusters"
+  name        = "eks-user"
   policy      = data.aws_iam_policy_document.eks-user.json
 }
 
