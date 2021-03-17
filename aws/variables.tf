@@ -22,3 +22,7 @@ variable "vpc_peering_id" {
   type    = string
   default = null
 }
+
+variable "domain_name" {
+  type    = string
+}
