@@ -28,6 +28,6 @@ variable "domain_name" {
 }
 
 variable "alb_url" {
-  type = string
+  type    = string
   default = null
 }

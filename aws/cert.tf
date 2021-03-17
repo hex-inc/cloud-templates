@@ -1,12 +1,11 @@
-resource "aws_acm_certificate" "cert" {
-  domain_name       = var.domain_name
-  validation_method = "DNS"
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> v2.0"
+
+  domain_name = var.domain_name
+  zone_id     = aws_route53_zone.hex.zone_id
 
   tags = {
-    Environment = var.name
-  }
-
-  lifecycle {
-    create_before_destroy = true
+    Name = var.domain_name
   }
 }

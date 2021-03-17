@@ -11,9 +11,8 @@ resource "aws_secretsmanager_secret_version" "hex-secrets" {
       cluster                 = module.eks.cluster_id
     },
     smtp = {
-        smtp_username     = aws_iam_access_key.ses-smtp.id
-    smtp_password     = aws_iam_access_key.ses-smtp.ses_smtp_password_v4
-      smtp_from_address = "notify@${var.domain_name}"
+      smtp_username = module.ses.access_key_id
+      smtp_password = module.ses.ses_smtp_password
     }
   })
 }
