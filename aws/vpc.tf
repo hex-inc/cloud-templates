@@ -1,4 +1,7 @@
-data "aws_availability_zones" "available" {
+locals {
+  cidr            = "10.0.0.0/16"
+  private_subnets = ["10.0.10.0/24", "10.0.20.0/24", "10.0.30.0/24"]
+  public_subnets  = ["10.0.110.0/24", "10.0.120.0/24", "10.0.130.0/24"]
 }
 
 module "vpc" {
@@ -6,10 +9,10 @@ module "vpc" {
   version = "~> 2.70"
 
   name            = var.name
-  cidr            = "10.0.0.0/16"
+  cidr            = local.cidr
   azs             = data.aws_availability_zones.available.names
-  private_subnets = ["10.0.10.0/24", "10.0.20.0/24", "10.0.30.0/24"]
-  public_subnets  = ["10.0.110.0/24", "10.0.120.0/24", "10.0.130.0/24"]
+  private_subnets = local.private_subnets
+  public_subnets  = local.public_subnets
 
   enable_nat_gateway = true
   single_nat_gateway = true

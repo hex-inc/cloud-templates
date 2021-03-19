@@ -18,3 +18,7 @@ variable "hex_account_id" {
 variable "hex_vpc_id" {
   type = string
 }
+
+variable "hex_vpc_region" {
+  type = string
+}

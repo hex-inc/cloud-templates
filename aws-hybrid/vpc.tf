@@ -20,6 +20,7 @@ module "vpc" {
 resource "aws_vpc_peering_connection" "peer" {
   vpc_id        = module.vpc.vpc_id
   peer_vpc_id   = var.hex_vpc_id
+  peer_region   = var.hex_vpc_region
   peer_owner_id = var.hex_account_id
 
   tags = {
