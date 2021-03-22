@@ -21,7 +21,3 @@ output "vpc_cidr" {
 output "eks_cidr_blocks" {
   value = local.private_subnets
 }
-
-output "cool" {
-  value = aws_iam_access_key.eks-user-test.encrypted_secret
-}
