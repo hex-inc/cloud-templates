@@ -91,8 +91,8 @@ module "eks" {
     {
       name                 = "worker-group"
       instance_type        = var.instance_type
-      max_size             = var.num_nodes
-      min_size             = var.num_nodes
+      asg_max_size         = var.num_nodes
+      asg_min_size         = var.num_nodes
       asg_desired_capacity = var.num_nodes
       root_kms_key_id      = aws_kms_key.workers.arn
       root_encrypted       = true
