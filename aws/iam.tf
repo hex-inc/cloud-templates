@@ -2,13 +2,13 @@
 resource "aws_iam_user" "eks-user" {
   for_each      = toset(jsondecode(var.eks_users))
   force_destroy = "false"
-  name          = each.name
+  name          = each.value
   path          = "/"
 }
 
 resource "aws_iam_user_policy_attachment" "eks-user" {
   for_each   = aws_iam_user.eks-user
-  user       = each.name
+  user       = each.value.name
   policy_arn = aws_iam_policy.eks-user.arn
 }
 
