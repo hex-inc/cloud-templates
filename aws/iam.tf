@@ -12,6 +12,12 @@ resource "aws_iam_user_policy_attachment" "eks-user" {
   policy_arn = aws_iam_policy.eks-user.arn
 }
 
+resource "aws_iam_user_policy_attachment" "eks-user" {
+  for_each   = aws_iam_user.eks-user
+  user       = each.value.name
+  policy_arn = aws_iam_policy.enforce-mfa.arn
+}
+
 # Allow users to connect to EKS
 data "aws_iam_policy_document" "eks-user" {
   statement {
