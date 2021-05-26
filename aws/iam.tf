@@ -12,7 +12,7 @@ resource "aws_iam_user_policy_attachment" "eks-user" {
   policy_arn = aws_iam_policy.eks-user.arn
 }
 
-resource "aws_iam_user_policy_attachment" "eks-user" {
+resource "aws_iam_user_policy_attachment" "enforce-mfa" {
   for_each   = aws_iam_user.eks-user
   user       = each.value.name
   policy_arn = aws_iam_policy.enforce-mfa.arn
