@@ -9,8 +9,8 @@ variable "region" {
 }
 
 variable "eks_users" {
-  type    = list(string)
-  default = []
+  type    = string
+  default = "[]"
 }
 
 variable "instance_type" {

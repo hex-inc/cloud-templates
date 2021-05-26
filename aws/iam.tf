@@ -1,6 +1,6 @@
 # create iam users for connecting to EKS. Creating access keys/passwords is done manually via UI
 resource "aws_iam_user" "eks-user" {
-  for_each      = var.eks_users
+  for_each      = toset(jsondecode(var.eks_users))
   force_destroy = "false"
   name          = each.name
   path          = "/"
