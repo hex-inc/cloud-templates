@@ -22,6 +22,7 @@ module "eks" {
   cluster_version = "1.18"
   cluster_name    = var.name
   subnets         = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
 
   cluster_endpoint_private_access = true
   manage_aws_auth                 = true
@@ -53,8 +54,6 @@ module "eks" {
     "controllerManager",
     "scheduler"
   ]
-
-  vpc_id = module.vpc.vpc_id
 
   worker_groups = [
     {
