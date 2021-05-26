@@ -16,45 +16,6 @@ resource "aws_kms_alias" "workers" {
   target_key_id = aws_kms_key.workers.key_id
 }
 
-resource "aws_iam_user" "eks-user" {
-  force_destroy = "false"
-  name          = "${var.name}-eks-user"
-  path          = "/"
-}
-
-resource "aws_iam_access_key" "eks-user" {
-  user = aws_iam_user.eks-user.name
-}
-
-resource "aws_iam_policy" "eks-user" {
-  description = "Allow user to use EKS clusters"
-  name        = "eks-user"
-  policy      = data.aws_iam_policy_document.eks-user.json
-}
-
-resource "aws_iam_user_policy_attachment" "eks-user" {
-  user       = aws_iam_user.eks-user.name
-  policy_arn = aws_iam_policy.eks-user.arn
-}
-
-data "aws_iam_policy_document" "eks-user" {
-  statement {
-    effect    = "Allow"
-    resources = ["*"]
-
-    actions = [
-      "eks:DescribeNodegroup",
-      "eks:ListNodegroups",
-      "eks:DescribeCluster",
-      "eks:ListClusters",
-      "eks:AccessKubernetesApi",
-      "ssm:GetParameter",
-      "eks:ListUpdates",
-      "eks:ListFargateProfiles",
-    ]
-  }
-}
-
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "~> 13.2"
@@ -66,11 +27,11 @@ module "eks" {
   manage_aws_auth                 = true
   enable_irsa                     = true
 
-  map_users = [
+  map_users = [for user in aws_iam_user.eks-user :
     {
       "groups"   = ["system:masters"]
-      "userarn"  = aws_iam_user.eks-user.arn
-      "username" = "${var.name}-eks-user"
+      "userarn"  = user.arn
+      "username" = user.name
     }
   ]
 
@@ -83,6 +44,14 @@ module "eks" {
       provider_key_arn = aws_kms_key.eks.arn
       resources        = ["secrets"]
     }
+  ]
+
+  cluster_enabled_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
   ]
 
   vpc_id = module.vpc.vpc_id

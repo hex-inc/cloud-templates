@@ -21,3 +21,7 @@ output "vpc_cidr" {
 output "eks_cidr_blocks" {
   value = local.private_subnets
 }
+
+output "acm_certificate_arn" {
+  value = module.acm.acm_certificate_arn
+}

@@ -1,4 +1,5 @@
 locals {
+  # hex is a reserved named, so we use hextech
   dbname     = "hextech"
   dbusername = "hextech"
 }
@@ -15,13 +16,13 @@ resource "aws_kms_alias" "rds" {
 
 resource "aws_security_group" "db" {
   name        = "${var.name}-db"
-  description = "Allow Hex VPC to connect to the DB"
+  description = "Allow worker nodes to connect to the DB"
   vpc_id      = module.vpc.vpc_id
   ingress {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = [module.eks.worker_security_group_id]
   }
 }
 
@@ -33,7 +34,6 @@ resource "aws_db_instance" "hex" {
   engine_version        = "11"
   instance_class        = "db.m5.large"
 
-  # hex is a reserved named, so we use hextech
   name     = local.dbname
   username = local.dbusername
   password = random_password.postgres-password.result

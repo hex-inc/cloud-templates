@@ -8,6 +8,11 @@ variable "region" {
   default = "us-east-2"
 }
 
+variable "eks_users" {
+  type    = list(string)
+  default = []
+}
+
 variable "instance_type" {
   type    = string
   default = "t3.2xlarge"
@@ -16,11 +21,6 @@ variable "instance_type" {
 variable "num_nodes" {
   type    = number
   default = "3"
-}
-
-variable "vpc_peering_id" {
-  type    = string
-  default = null
 }
 
 variable "domain_name" {

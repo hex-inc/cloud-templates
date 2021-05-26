@@ -16,8 +16,7 @@ resource "aws_iam_user" "files-s3" {
 }
 
 resource "aws_iam_access_key" "files-s3" {
-  user    = aws_iam_user.files-s3.name
-  pgp_key = var.pgp_key
+  user = aws_iam_user.files-s3.name
 }
 
 resource "aws_kms_grant" "files-s3" {
