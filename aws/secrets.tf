@@ -11,6 +11,8 @@ resource "aws_secretsmanager_secret_version" "hex-secrets" {
     smtp = {
       smtp_username = module.ses.access_key_id
       smtp_password = module.ses.ses_smtp_password
+      smtp_host     = "email-smtp.${var.region}.amazonaws.com"
+      smtp_port     = 465
     },
     backend = {
       "AWS_SECRET_ACCESS_KEY" = aws_iam_access_key.files-s3.secret
