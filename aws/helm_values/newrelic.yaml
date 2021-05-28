@@ -1,0 +1,46 @@
+ksm:
+  enabled: true
+kube-state-metrics:
+  collectors:
+    certificatesigningrequests: true
+    configmaps: true
+    cronjobs: true
+    daemonsets: true
+    deployments: true
+    endpoints: false
+    horizontalpodautoscalers: true
+    ingresses: true
+    jobs: true
+    limitranges: false
+    mutatingwebhookconfigurations: false
+    namespaces: true
+    networkpolicies: false
+    nodes: true
+    persistentvolumeclaims: true
+    persistentvolumes: true
+    poddisruptionbudgets: false
+    pods: true
+    replicasets: true
+    replicationcontrollers: true
+    resourcequotas: false
+    secrets: true
+    services: true
+    statefulsets: true
+    storageclasses: false
+    validatingwebhookconfigurations: false
+    verticalpodautoscalers: false
+    volumeattachments: false
+kubeEvents:
+  enabled: true
+logging:
+  enabled: false
+newrelic-infrastructure:
+  config:
+    metrics_network_sample_rate: 60
+    metrics_nfs_sample_rate: 60
+    metrics_process_sample_rate: 60
+    metrics_storage_sample_rate: 60
+    metrics_system_sample_rate: 60
+  detailed_nfs: false
+prometheus:
+  enabled: false
