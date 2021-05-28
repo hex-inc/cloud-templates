@@ -41,7 +41,7 @@ resource "helm_release" "newrelic" {
 
   set {
     name  = "global.cluster"
-    value = rancher2_cluster.hex.name
+    value = var.name
   }
   set_sensitive {
     name  = "global.licenseKey"
