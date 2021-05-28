@@ -44,3 +44,16 @@ variable "ses_enabled" {
   type    = bool
   default = false
 }
+
+# Monitoring
+variable "monitoring_enabled" {
+  type = bool
+}
+
+variable "newrelic_license_key" {
+  type = string
+}
+
+variable "nr_slack_webhook" {
+  type = string
+}
