@@ -1,6 +1,6 @@
 locals {
   prometheus_name = "${var.name}-prometheus"
-  vault_endpoint  = "hex-vault.${helm_release.hex.namespace}:8200"
+  vault_endpoint  = "hex-vault.hex:8200"
 }
 
 resource "kubernetes_namespace" "monitoring" {
