@@ -14,7 +14,7 @@ data "kubernetes_secret" "hex_vault_keys" {
   count = var.monitoring_enabled ? 1 : 0
   metadata {
     name      = "hex-vault-keys"
-    namespace = hex
+    namespace = "hex"
   }
 }
 
