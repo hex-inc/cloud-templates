@@ -1,9 +1,9 @@
 locals {
-  signal_expiration_duration    = 300
-  kernel_pools                  = toset(["${var.name}-prewarmed-kernels-private", "${var.name}-prewarmed-kernels-public"])
-  statefulset_names             = toset(["${var.name}-builtinredis-slave", "${var.name}-builtinredis-master", "hex-vault"])
-  deployment_names              = toset(["${var.name}-hex", "${var.name}-hex-data-service"])
-  non_rolling_deployment_names  = toset(["${var.name}-hex-data-service"]) #These deployments get sensitive alerts on podsMissing
+  signal_expiration_duration   = 300
+  kernel_pools                 = toset(["${var.name}-prewarmed-kernels-private", "${var.name}-prewarmed-kernels-public"])
+  statefulset_names            = toset(["${var.name}-builtinredis-slave", "${var.name}-builtinredis-master", "hex-vault"])
+  deployment_names             = toset(["${var.name}-hex", "${var.name}-hex-data-service"])
+  non_rolling_deployment_names = toset(["${var.name}-hex-data-service"]) #These deployments get sensitive alerts on podsMissing
 }
 
 # Node-level alerts
