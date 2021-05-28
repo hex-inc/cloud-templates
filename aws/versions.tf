@@ -13,5 +13,9 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.1"
     }
+    newrelic = {
+      source  = "newrelic/newrelic"
+      version = "~> 2.12"
+    }
   }
 }

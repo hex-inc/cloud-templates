@@ -16,3 +16,6 @@ provider "helm" {
     token                  = data.aws_eks_cluster_auth.hex.token
   }
 }
+
+provider "newrelic" {
+}
