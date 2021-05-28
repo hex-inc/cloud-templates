@@ -1,6 +1,7 @@
 locals {
-  prometheus_name = "${var.name}-prometheus"
-  vault_endpoint  = "hex-vault.hex:8200"
+  prometheus_name            = "${var.name}-prometheus"
+  vault_endpoint             = "hex-vault.hex:8200"
+  monitoring_monitoring_cluster_name    = "hex-chime" # Hardcode the cluster name to chime since this is the only customer on this branch.
 }
 
 resource "kubernetes_namespace" "monitoring" {
@@ -41,7 +42,7 @@ resource "helm_release" "newrelic" {
 
   set {
     name  = "global.cluster"
-    value = "hex-chime" # Hardcode the cluster name to chime since this is the only customer on this branch.
+    value =  local.monitoring_cluster_name
   }
   set_sensitive {
     name  = "global.licenseKey"
@@ -64,7 +65,7 @@ resource "helm_release" "prometheus" {
 
 resource "newrelic_alert_channel" "slack" {
   count = var.monitoring_enabled ? 1 : 0
-  name  = "hex-chime-slack" # Hardcode the cluster name to chime since this is the only customer on this branch.
+  name  = "${local.monitoring_cluster_name}-slack"
 
   type  = "slack"
 
@@ -76,7 +77,7 @@ resource "newrelic_alert_channel" "slack" {
 
 resource "newrelic_alert_policy" "default" {
   count               = var.monitoring_enabled ? 1 : 0
-  name                = "hex-chime" # Hardcode the cluster name to chime since this is the only customer on this branch.
+  name                = local.monitoring_cluster_name
 
   incident_preference = "PER_CONDITION_AND_TARGET"
 }

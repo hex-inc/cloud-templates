@@ -1,6 +1,6 @@
 resource "newrelic_dashboard" "overview" {
   count = var.monitoring_enabled ? 1 : 0
-  title = "Overview of hex-chime"
+  title = "Overview of ${local.monitoring_cluster_name}"
 
   widget {
     title         = "Cluster CPU"
