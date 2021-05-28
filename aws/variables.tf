@@ -34,7 +34,7 @@ variable "alb_url" {
 
 # Monitoring variables
 variable "monitoring_enabled" {
-  type    = bool
+  type = bool
 }
 
 variable "newrelic_license_key" {
