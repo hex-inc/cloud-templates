@@ -31,3 +31,27 @@ variable "alb_url" {
   type    = string
   default = null
 }
+
+# Monitoring variables
+variable "monitoring_enabled" {
+  type    = bool
+}
+
+variable "newrelic_region" {
+  type    = string
+}
+
+variable "newrelic_license_key" {
+  type = string
+}
+variable "newrelic_account_id" {
+  type = string
+}
+
+variable "newrelic_api_key" {
+  type = string
+}
+
+variable "nr_slack_webhook" {
+  type = string
+}
