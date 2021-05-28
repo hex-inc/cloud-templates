@@ -1,7 +1,7 @@
 locals {
   prometheus_name            = "${var.name}-prometheus"
   vault_endpoint             = "hex-vault.hex:8200"
-  monitoring_monitoring_cluster_name    = "hex-chime" # Hardcode the cluster name to chime since this is the only customer on this branch.
+  monitoring_cluster_name    = "hex-chime" # Hardcode the cluster name to chime since this is the only customer on this branch.
 }
 
 resource "kubernetes_namespace" "monitoring" {
