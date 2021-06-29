@@ -1,4 +1,4 @@
-resource "newrelic_dashboard" "overview" {
+resource "newrelic_one_dashboard" "overview" {
   count = var.monitoring_enabled ? 1 : 0
   title = "Overview of ${local.monitoring_cluster_name}"
 
