@@ -1,4 +1,0 @@
-name = "hex-main"
-num_nodes = 3
-instance_type = "t3.xlarge"
-region = "us-east-2"

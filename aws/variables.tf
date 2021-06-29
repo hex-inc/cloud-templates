@@ -1,6 +1,6 @@
 variable "name" {
   type    = string
-  default = "hex-main"
+  default = "hex"
 }
 
 variable "region" {
@@ -8,39 +8,26 @@ variable "region" {
   default = "us-east-2"
 }
 
-variable "num_nodes" {
-  type    = number
-  default = 3
+variable "eks_users" {
+  type    = string
+  default = "[]"
 }
 
 variable "instance_type" {
   type    = string
-  default = "t3.xlarge"
+  default = "t3.2xlarge"
 }
 
-variable "create_db_tunnel" {
-  type    = bool
-  default = false
+variable "num_nodes" {
+  type    = number
+  default = "3"
 }
 
-variable "additional_eks_users" {
-  type    = list(object({ groups = list(string), userarn = string, username = string }))
-  default = []
+variable "domain_name" {
+  type = string
 }
 
-# Optional route53
-variable "domain" {
+variable "alb_url" {
   type    = string
   default = null
-}
-
-variable "alb_hostname" {
-  type    = string
-  default = null
-}
-
-# Optional SES (route53 required as well)
-variable "ses_enabled" {
-  type    = bool
-  default = false
 }
