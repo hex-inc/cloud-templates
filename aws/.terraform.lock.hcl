@@ -3,7 +3,7 @@
 
 provider "registry.terraform.io/hashicorp/aws" {
   version     = "3.42.0"
-  constraints = ">= 2.0.0, >= 2.53.0, >= 3.0.0, >= 3.3.0, >= 3.10.0"
+  constraints = ">= 2.0.0, >= 2.53.0, >= 2.70.0, >= 3.0.0, >= 3.3.0"
   hashes = [
     "h1:C6/yDp6BhuDFx0qdkBuJj/OWUJpAoraHTJaU6ac38Rw=",
     "zh:126c856a6eedddd8571f161a826a407ba5655a37a6241393560a96b8c4beca1a",
@@ -130,5 +130,28 @@ provider "registry.terraform.io/hashicorp/template" {
     "zh:992843002f2db5a11e626b3fc23dc0c87ad3729b3b3cff08e32ffb3df97edbde",
     "zh:ad906f4cebd3ec5e43d5cd6dc8f4c5c9cc3b33d2243c89c5fc18f97f7277b51d",
     "zh:c979425ddb256511137ecd093e23283234da0154b7fa8b21c2687182d9aea8b2",
+  ]
+}
+
+provider "registry.terraform.io/newrelic/newrelic" {
+  version = "2.23.0"
+  hashes = [
+    "h1:9SydRMVXQbBuOXycyC5yHyUVE4iZqJLYNt/9iQGHAqg=",
+    "zh:0d675a13f1c4fb6e3e317fca9e1bc098cf4efc2dfde5c669a5882210cae4c046",
+    "zh:14766822ce0a0d6bc5f601af4d3fea351120b9e4185f39287ddef6287ece02f1",
+    "zh:1d591569c7374adb467733bbb08dbfff7da2d446d843cac2364ae9d6d81c2419",
+    "zh:29e819922680c32e75402f42d9f774322124fdab97551d7586580e75beffb093",
+    "zh:368137c3367dd25a7d3a78f774570dbce59b696266526bae7a20bed4f96c4251",
+    "zh:3ca849a00d1ec86734eb09d9b82adae717b0fad96f034762339c8464cc32a15d",
+    "zh:444c7ace9c5f9def123423c5151f2d6eb2ce081f249044926971dacc4db33715",
+    "zh:46eb7333e6cc357fe36b795ab497bba0a43b2df87cde7805a0da2978af8aad4f",
+    "zh:65fd97ae780536d48fb8da5e7ed0df22b7921170fc8d4574f7c20d5f10738aae",
+    "zh:888e40d9927690c179fc49ae85fdeab0061e7311346c6f85d0692523485a034e",
+    "zh:a81670ea070abb1e524e08af09f6899221ab25e028f273961eef4bac93c79276",
+    "zh:b8137ba16cef4a932aff62575022dfef02ef70a7eb9295bb5468f121f85b953c",
+    "zh:d03405214b22d95aea350ded154b67e7fe1f27a1fcad674e85270766e22ca7d2",
+    "zh:e6f8bed47c49244023935d030c41b5648dc905b9f438bd095d41ebc647460dc5",
+    "zh:e8d220dba7fcb0be4f03c0a9fb88031444fb5f46eae52bc9b0a5154fe3a6a01a",
+    "zh:f47a35c4acc6ac919ab71bb935eac6bec1cdbd69cc27aa0ac5352de76993e9f3",
   ]
 }
