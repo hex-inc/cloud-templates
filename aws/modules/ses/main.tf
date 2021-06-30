@@ -1,6 +1,6 @@
 module "ses" {
   source  = "cloudposse/ses/aws"
-  version = "0.8.1"
+  version = "~> 0.18"
 
   name          = var.name
   domain        = var.domain
