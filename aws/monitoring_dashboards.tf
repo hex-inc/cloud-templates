@@ -2,6 +2,8 @@ resource "newrelic_one_dashboard" "overview" {
   count = var.monitoring_enabled ? 1 : 0
   name  = "Overview of ${local.monitoring_cluster_name}"
   page {
+    name = "Overview of ${local.monitoring_cluster_name}"
+
     widget_line {
       title = "Cluster CPU"
       nrql_query {
